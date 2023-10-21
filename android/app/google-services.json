@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138915213389",
+    "project_id": "orthoscan-cc568",
+    "storage_bucket": "orthoscan-cc568.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138915213389:android:93831971158649a159ec04",
+        "android_client_info": {
+          "package_name": "com.example.orthoscan2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpm3h0go4DX_h8xH4-FdjRHdpX4N6JS78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
