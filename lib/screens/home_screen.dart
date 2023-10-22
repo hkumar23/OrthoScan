@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orthoscan2/widgets/app_drawer.dart';
+import 'package:orthoscan2/widgets/side_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName='/home-screen';
@@ -8,7 +8,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: AppDrawer(),
+        drawer: SideDrawer(),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(
@@ -21,12 +21,13 @@ class HomeScreen extends StatelessWidget {
             children: [
               Card(
                 child: Column(children: [
-                  ListTile(title: Text("Flat Feet"),)
+                  ListTile(
+                    title: Text("Flat Feet"),)
                 ]),
               ),
               Card(
                 child: Column(children: [
-                  ListTile(title: Text("Flat Feet"),)
+                  ListTile(title: Text("Knock Knees"),)
                 ]),
               )
             ],

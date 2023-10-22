@@ -21,26 +21,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // backgroundColor: Colors.grey.shade200,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          surface: Colors.green.shade50,
-          secondary: Colors.greenAccent,
-          // primary: Colors.green,
+          seedColor: Colors.blue,
+          // brightness: Brightness.dark,
+          background: Colors.blue.shade50,
+          // surface: Colors.blue.shade50,
+          secondary: Colors.blueGrey,
+          // primary: Colors.blue,
           ),
-        primarySwatch: Colors.green,
+        // primarySwatch: Colors.green,
         // brightness: Brightness.light,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.green,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0))
-          )
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.green,
-          )
-        ),
         useMaterial3: true,
       ),
       // initialRoute: HomeScreen.routeName,
