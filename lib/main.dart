@@ -9,34 +9,51 @@ void main() async {
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Brightness themeBrightness=Brightness.light;
+  void toggleAppTheme(){
+    setState(() {
+      if(themeBrightness==Brightness.dark){
+        themeBrightness=Brightness.light;
+      }
+      else{
+        themeBrightness=Brightness.dark;
+      }
+    });
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-          // brightness: Brightness.dark,
-          background: Colors.blue.shade50,
-          // surface: Colors.blue.shade50,
-          secondary: Colors.blueGrey,
-          // primary: Colors.blue,
-          ),
+        // colorScheme: ColorScheme.fromSeed(
+        //   seedColor: Colors.blue,
+        //   // brightness: Brightness.dark,
+        //   // background:Colors.blueAccent[50],
+        //   // surface: Colors.blue.shade50,
+        //   // secondary: Colors.blueGrey,
+        //   // primary: Colors.blue,
+        //   ),
+        colorSchemeSeed: Colors.teal,
         // primarySwatch: Colors.green,
-        // brightness: Brightness.light,
+        brightness: themeBrightness,
         useMaterial3: true,
       ),
       // initialRoute: HomeScreen.routeName,
-      home: HomeScreen(),
+      home: HomeScreen(toggleAppTheme,themeBrightness),
       routes: {
-        HomeScreen.routeName : (context)=> HomeScreen(),
+        HomeScreen.routeName : (context)=> HomeScreen(toggleAppTheme,themeBrightness),
       },
     );
   }
