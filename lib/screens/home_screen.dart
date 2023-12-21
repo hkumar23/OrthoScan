@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orthoscan2/screens/problem_detection_screen.dart';
 import 'package:orthoscan2/widgets/category_item.dart';
 import 'package:orthoscan2/widgets/side_drawer.dart';
 
@@ -74,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                       subtitleText: "Experience Engaging Workouts Anywhere, Anytime"
                       ),
                    _pageViewItem(
-                      imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS15bTAi8me4zhJV9899xIBGwg3S8urDk8ULg&usqp=CAU",
+                      imageUrl: "https://www.solutionanalysts.com/blog/wp-content/uploads/2021/05/users-of-health-and-fitness-apps.jpg",
                       titleText: "Monitor Your Health Journey",
                       subtitleText: "Visualize Your Improvement Over Time"
                       ),
@@ -88,19 +89,46 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
-                    CategoryItem(
-                      "https://i.pinimg.com/564x/55/1f/82/551f82e73017b0f640bf424c91dc6571.jpg",
-                      "Flat Feet Detection",
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(
+                          context,
+                          ProblemDetectionScreen.routeName,
+                          arguments:"Flat Feet Detection",
+                          );
+                      }, 
+                      child: CategoryItem(
+                        "https://i.pinimg.com/564x/55/1f/82/551f82e73017b0f640bf424c91dc6571.jpg",
+                        "Flat Feet Detection",
+                      ),
                     ),
                     const SizedBox(height: 7,),
-                    CategoryItem(
-                      "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",
-                      "Knock Knee Detection",
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(
+                          context,
+                          ProblemDetectionScreen.routeName,
+                          arguments:"Knock Knee Detection",
+                          );
+                      },
+                      child: CategoryItem(
+                        "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",
+                        "Knock Knee Detection",
+                      ),
                     ),
                     const SizedBox(height: 7,),
-                    CategoryItem(
-                      "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",
-                      "Interactive Exercises",
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.pushNamed(
+                          context,
+                          ProblemDetectionScreen.routeName,
+                          arguments:"Interactive Exercises",
+                          );
+                      },
+                      child: CategoryItem(
+                        "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",
+                        "Interactive Exercises",
+                      ),
                     ),
                     const SizedBox(
                       height: 10,
@@ -138,7 +166,7 @@ class _pageViewItem extends StatelessWidget {
           image: DecorationImage(
                   image: NetworkImage(imageUrl),
                   fit: BoxFit.cover,
-                  opacity: 0.2,
+                  opacity: 0.3,
                   alignment: Alignment.bottomCenter
               )
         ),                                                       

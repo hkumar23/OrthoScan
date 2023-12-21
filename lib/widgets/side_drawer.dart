@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:orthoscan2/providers/auth.dart';
+import 'package:orthoscan2/screens/home_screen.dart';
+import 'package:orthoscan2/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
@@ -103,21 +107,43 @@ class SideDrawer extends StatelessWidget {
                                   context,
                                   Icons.home,
                                   "Home",
+                                  (){
+                                    Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+                                  },
                                   ),
                                 _listTileBuilder(
                                   context, 
                                   Icons.account_circle,
                                   "My Profile",
+                                  (){
+                                    Navigator.of(context).pushNamed(ProfileScreen.routeName);
+                                  },
                                   ),
                                 _listTileBuilder(
                                   context,
                                   Icons.history,
                                   "History and Progress",
+                                  (){},
                                   ),
                                 _listTileBuilder(
                                   context,
                                   Icons.feedback, 
                                   "Feedback",
+                                  (){},
+                                  ),
+                                  SizedBox(
+                                    height:200,
+                                  ),
+                                _listTileBuilder(
+                                  context,
+                                  Icons.logout, 
+                                  "Logout",                                                                      
+                                  (){
+                                    // print("logout initiated");
+                                    Provider.of<Auth>(context,listen: false).logout();    
+                                    Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                                    Navigator.of(context).pushNamed('/');
+                                    },                                 
                                   )
                               ],
                             ),
@@ -141,11 +167,16 @@ class SideDrawer extends StatelessWidget {
     // );
   }
 
-  Material _listTileBuilder(BuildContext context, IconData iconData, String titleText) {
+  Material _listTileBuilder(
+    BuildContext context,
+    IconData iconData, 
+    String titleText,
+    Function () _ontap,
+    ) {
     return Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: (){},
+                    onTap: _ontap,
                     splashColor: Colors.white.withOpacity(0.2),
                     child: ListTile(
                       contentPadding: const EdgeInsets.symmetric(horizontal: 40),
