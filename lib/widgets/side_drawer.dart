@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orthoscan2/providers/auth.dart';
 import 'package:orthoscan2/screens/home_screen.dart';
@@ -9,6 +11,7 @@ class SideDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currUser=FirebaseAuth.instance.currentUser;
     return Drawer(
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             shape: const RoundedRectangleBorder(
@@ -39,57 +42,67 @@ class SideDrawer extends StatelessWidget {
                                   ),
                                   height: double.infinity,
                                   width: double.infinity,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(50),
-                                          boxShadow: [BoxShadow(
-                                            blurRadius: 10,
-                                            color: Colors.black.withOpacity(0.3),
-                                            offset: const Offset(0, 3),                                        
-                                          )],
-                                        ),
-                                        child: const CircleAvatar(
-                                          radius: 40,
-                                          backgroundImage: NetworkImage(
-                                            "https://i.pinimg.com/736x/20/c0/0f/20c00f0f135c950096a54b7b465e45cc.jpg",
+                                  child: StreamBuilder(
+                                    stream: FirebaseFirestore.instance.collection("users").doc(currUser!.uid).snapshots(),
+                                    builder: (context, userSnapshot) {
+                                      final userData=userSnapshot.data;
+                                      if(userSnapshot.connectionState == ConnectionState.waiting ||
+                                      userData==null){
+                                        return const Center(child: CircularProgressIndicator(),);
+                                      }
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(50),
+                                              boxShadow: [BoxShadow(
+                                                blurRadius: 10,
+                                                color: Colors.black.withOpacity(0.3),
+                                                offset: const Offset(0, 3),                                        
+                                              )],
                                             ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 7,
-                                      ),
-                                      Text(
-                                        "Full Name",
-                                        style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                          // color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                          fontWeight: FontWeight.bold,
-                                          // shadows: [
-                                          //   Shadow(
-                                          //     blurRadius: 5,
-                                          //     color: Colors.black.withOpacity(0.3),
-                                          //     offset: const Offset(0,2),
-                                          //   ),
-                                          // ],
+                                            child: const CircleAvatar(
+                                              radius: 40,
+                                              backgroundImage: NetworkImage(
+                                                "https://i.pinimg.com/736x/20/c0/0f/20c00f0f135c950096a54b7b465e45cc.jpg",
+                                                ),
+                                            ),
                                           ),
-            
-                                      ),
-                                      Text(
-                                        "email@gmail.com",
-                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          // shadows: [
-                                          //   Shadow(
-                                          //     blurRadius: 1.5,
-                                          //     color: Colors.black.withOpacity(0.3),
-                                          //     offset: const Offset(0,1.5),
-                                          //   ),
-                                          // ],
+                                          const SizedBox(
+                                            height: 7,
                                           ),
-                                      ),
-                                    ],
+                                          Text(
+                                            userData["username"],
+                                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                              // color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                              fontWeight: FontWeight.bold,
+                                              // shadows: [
+                                              //   Shadow(
+                                              //     blurRadius: 5,
+                                              //     color: Colors.black.withOpacity(0.3),
+                                              //     offset: const Offset(0,2),
+                                              //   ),
+                                              // ],
+                                              ),
+                                                  
+                                          ),
+                                          Text(
+                                            userData["email"],
+                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                              fontWeight: FontWeight.bold,
+                                              // shadows: [
+                                              //   Shadow(
+                                              //     blurRadius: 1.5,
+                                              //     color: Colors.black.withOpacity(0.3),
+                                              //     offset: const Offset(0,1.5),
+                                              //   ),
+                                              // ],
+                                              ),
+                                          ),
+                                        ],
+                                      );
+                                    }
                                   ),
                                 )
                               ],
@@ -140,9 +153,9 @@ class SideDrawer extends StatelessWidget {
                                   "Logout",                                                                      
                                   (){
                                     // print("logout initiated");
-                                    Provider.of<Auth>(context,listen: false).logout();    
-                                    Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                                    Navigator.of(context).pushNamed('/');
+                                    Provider.of<Auth>(context,listen: false).logout(context);    
+                                    // Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                                    // Navigator.of(context).pushNamed('/');
                                     },                                 
                                   )
                               ],

@@ -21,6 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordFocusNode=FocusNode();
   final _emailFocusNode=FocusNode();
 
+  Map<String,dynamic> _formData={
+    "email":"",
+    "password":"",
+  };
+
+  bool isLoading=false;
+
   @override
   dispose(){
     _emailController.dispose();
@@ -29,13 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordFocusNode.dispose();
     super.dispose();
   }
-
-  Map<String,dynamic> _formData={
-    "email":"",
-    "password":"",
-  };
-
-  bool isLoading=false;
 
   void _submit(BuildContext context) async {
     FocusScope.of(context).unfocus();
@@ -54,18 +54,20 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text.trim(), 
         password: _passwordController.text.trim(),
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Theme.of(context).colorScheme.onBackground,
-            content: const Padding(
-              padding: EdgeInsets.all(5),
-              child: Text("Logged In Successfully"),
-          ))
-        );
-      setState(() {
-        isLoading=false;
-      });
-      return;
+        // debugPrint("Auth Completed");
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     backgroundColor: Theme.of(context).colorScheme.onBackground,
+        //     content: const Padding(
+        //       padding: EdgeInsets.all(5),
+        //       child: Text("Logged In Successfully"),
+        //   ))
+        // );
+      if(mounted){
+        setState(() {
+          isLoading=false;
+        });
+      } 
     }catch(err){
       debugPrint("Error Occured: $err");
       setState(() {
@@ -73,7 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       return;
     }
+    return;
   }
+
 
   @override
   Widget build(BuildContext context) {

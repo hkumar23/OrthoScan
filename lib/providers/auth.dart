@@ -20,13 +20,15 @@ class Auth with ChangeNotifier{
     return false;
   }
 
-  void logout(){
+  void logout(BuildContext context){
     FirebaseAuth.instance.signOut();
     userEmail=null;
     userName=null;
     userId=null;
+    Navigator.of(context).popUntil(ModalRoute.withName('/'));
+    Navigator.of(context).pushNamed('/');
     // notifyListeners();
-    print("logged out");
+    // print("logged out");
   }
 
   Future<void> authenticate({

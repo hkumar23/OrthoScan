@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> {
             routes: {
               HomeScreen.routeName : (context)=> HomeScreen(toggleAppTheme,themeBrightness),
               ProblemDetectionScreen.routeName : (context)=> ProblemDetectionScreen(),
-              ProfileScreen.routeName :(context) => ProfileScreen(),
+              ProfileScreen.routeName :(context) => ProfileScreen(toggleAppTheme,themeBrightness),
               LoginScreen.routeName : (context) => LoginScreen(),
               SignupScreen.routeName : (context) => SignupScreen(),
             },

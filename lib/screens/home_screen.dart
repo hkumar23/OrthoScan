@@ -15,10 +15,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: SideDrawer(),
+        drawer: const SideDrawer(),
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "OrthoScan",
             ),
           actions: [
