@@ -31,21 +31,20 @@ class _UserImagePickerState extends State<UserImagePicker> {
       child: Column(
         children: [
           Container(          
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(              
               borderRadius: BorderRadius.all(Radius.circular(50)),
-              boxShadow: [BoxShadow(
-                offset: Offset(0, 2),
-                color: Colors.blueGrey,
+              boxShadow: [BoxShadow(                
+                offset: const Offset(0, 2),
+                color: Colors.grey.withOpacity(0.5),                
                 blurRadius: 7,
                 )]
             ),
-            child:CircleAvatar(
-                      radius: 50,
-                      // backgroundColor: Colors.grey,
+            child:CircleAvatar(                                    
+                      radius: 50,                    
                       backgroundImage: 
                       pickedImage!=null ? 
                       FileImage(pickedImage!) : 
-                      NetworkImage("https://images.nightcafe.studio//assets/profile.png?tr=w-640,c-at_max") as ImageProvider,
+                      const NetworkImage("https://i.pinimg.com/736x/20/c0/0f/20c00f0f135c950096a54b7b465e45cc.jpg") as ImageProvider,
                     ),
           ),
           const SizedBox(height: 5),

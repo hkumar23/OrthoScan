@@ -62,10 +62,10 @@ class SideDrawer extends StatelessWidget {
                                                 offset: const Offset(0, 3),                                        
                                               )],
                                             ),
-                                            child: const CircleAvatar(
+                                            child: CircleAvatar(
                                               radius: 40,
                                               backgroundImage: NetworkImage(
-                                                "https://i.pinimg.com/736x/20/c0/0f/20c00f0f135c950096a54b7b465e45cc.jpg",
+                                                userData["userImageUrl"],
                                                 ),
                                             ),
                                           ),

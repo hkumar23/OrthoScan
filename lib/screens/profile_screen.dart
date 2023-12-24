@@ -71,9 +71,9 @@ class ProfileScreen extends StatelessWidget {
                               )
                             ]
                           ),
-                          child: const CircleAvatar(                      
+                          child: CircleAvatar(                      
                             radius: 70,
-                            backgroundImage: NetworkImage("https://i.pinimg.com/564x/c4/c2/34/c4c23420aa097fcb949a3011eddeab3b.jpg"),
+                            backgroundImage: NetworkImage(userData["userImageUrl"]),
                           ),
                         ),
                         const SizedBox(height: 5,),
@@ -110,16 +110,25 @@ class ProfileScreen extends StatelessWidget {
                                     leading: Icon(Icons.edit),
                                     title: Text("Edit Name",style: TextStyle(fontWeight: FontWeight.bold),),
                                     trailing: Icon(Icons.arrow_forward_rounded),
-                                  ),                        
+                                    onTap: (){},
+                                  ),       
+                                  ListTile(
+                                    leading: Icon(Icons.image),
+                                    title: Text("Change Profile Image",style: TextStyle(fontWeight: FontWeight.bold),),
+                                    trailing: Icon(Icons.arrow_forward_rounded),
+                                    onTap: (){},
+                                  ),                   
                                   ListTile(
                                     leading: Icon(Icons.lock),
                                     title: Text("Change Password",style: TextStyle(fontWeight: FontWeight.bold),),
                                     trailing: Icon(Icons.arrow_forward_rounded),
+                                    onTap: (){},
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.history),
                                     title: Text("History and Progress",style: TextStyle(fontWeight: FontWeight.bold),),
                                     trailing: Icon(Icons.arrow_forward_rounded),
+                                    onTap: (){},
                                   ),
                                   ListTile(
                                     leading: const Icon(Icons.home),

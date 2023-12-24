@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:orthoscan2/providers/auth.dart';
 import 'package:orthoscan2/screens/home_screen.dart';
 import 'package:orthoscan2/screens/login_screen.dart';
 import 'package:orthoscan2/widgets/clip_paths.dart';
+import 'package:orthoscan2/widgets/user_image_picker.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -21,6 +24,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _formData = {
     "email":"",
     "username":"",
+    "userImageFile":null as File?,
   };
 
   // @override
@@ -36,15 +40,24 @@ class _SignupScreenState extends State<SignupScreen> {
     if(!_formKey.currentState!.validate()){
       return;
     }
+    if(_formData["userImageFile"]==null){
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text("Please Upload Image!",),
+          backgroundColor: Theme.of(context).colorScheme.error,
+        )
+      );
+      return;
+    }
     _formKey.currentState!.save();
     setState(() {
       isLoading=true;
     });
     
-    try{
+    try{        
       await Provider.of<Auth>(context, listen: false).authenticate(
         context: context,
-        email: _formData["email"]!.trim(), 
+        email: _formData["email"].toString(),
         password: _passwordController.text.trim(),
         isSignup: true,
         userData: _formData
@@ -115,6 +128,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
+                      const SizedBox(height: 10,),
+                      UserImagePicker((pickedImage) {
+                        _formData["userImageFile"]=pickedImage;
+                       }),
                       TextFormField(
                         key: const Key("username"),
                         validator: (value){
@@ -126,7 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         decoration: const InputDecoration(label: Text("Full Name")),
                         keyboardType: TextInputType.name,
                         onSaved: (value){
-                          _formData["username"]=value!;
+                          _formData["username"]=value!.trim();
                         },
                       ),
                       const SizedBox(height: 5,),
@@ -141,7 +158,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         decoration: const InputDecoration(label: Text("Email Address")),
                         keyboardType: TextInputType.emailAddress,
                         onSaved: (value){
-                          _formData["email"]=value!;
+                          _formData["email"]=value!.trim();
                         },
                       ),
                       const SizedBox(height: 5,),
@@ -162,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextFormField(
                         key: const Key("confirm password"),
                         validator: (value){
-                          if(value!.isEmpty || value!=_passwordController.text){
+                          if(value!.isEmpty || value.trim()!=_passwordController.text.trim()){
                             return "Password Didn't matched!";
                           }      
                           return null;        

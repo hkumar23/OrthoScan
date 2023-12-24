@@ -1,16 +1,20 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 
 class Auth with ChangeNotifier{
   String? userEmail;
   String? userName;
   String? userId;
-
+  String? userImageUrl;
   Auth({
     this.userEmail,
     this.userName,
     this.userId,
+    this.userImageUrl,
   });
 
   bool isAuth(){
@@ -25,6 +29,7 @@ class Auth with ChangeNotifier{
     userEmail=null;
     userName=null;
     userId=null;
+    userImageUrl=null;
     Navigator.of(context).popUntil(ModalRoute.withName('/'));
     Navigator.of(context).pushNamed('/');
     // notifyListeners();
@@ -42,12 +47,20 @@ class Auth with ChangeNotifier{
     final auth=FirebaseAuth.instance;
     try{
       if(isSignup){
+
         final authResponse = await auth.createUserWithEmailAndPassword(email: email, password: password);
         userId=authResponse.user!.uid;
         // print("User ID: $userId");
+
+        final ref=FirebaseStorage.instance.ref().child("user_image").child(userId! + '.png');
+        await ref.putFile(userData!["userImageFile"] as File);
+        userImageUrl=await ref.getDownloadURL();
+        // print("user Image: $userImageUrl");
+
         await FirebaseFirestore.instance.collection("users").doc(userId).set({
-          "username":userData!["username"],
+          "username":userData["username"],
           "email": email,
+          "userImageUrl": userImageUrl,
           });
         userName=userData["username"];
         userEmail=email;
