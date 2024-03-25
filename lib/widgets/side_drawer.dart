@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:orthoscan2/providers/auth.dart';
+import 'package:orthoscan2/screens/feedback_screen.dart';
+import 'package:orthoscan2/screens/historyandprogress_screen.dart';
 import 'package:orthoscan2/screens/home_screen.dart';
 import 'package:orthoscan2/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
@@ -53,52 +55,61 @@ class SideDrawer extends StatelessWidget {
                                       return Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(50),
-                                              boxShadow: [BoxShadow(
-                                                blurRadius: 10,
-                                                color: Colors.black.withOpacity(0.3),
-                                                offset: const Offset(0, 3),                                        
-                                              )],
+                                          Expanded(
+                                            flex: 5,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(50),
+                                                boxShadow: [BoxShadow(
+                                                  blurRadius: 10,
+                                                  color: Colors.black.withOpacity(0.3),
+                                                  offset: const Offset(0, 3),                                        
+                                                )],
+                                              ),
+                                              child: CircleAvatar(
+                                                radius: 40,
+                                                backgroundImage: NetworkImage(
+                                                  userData["userImageUrl"],
+                                                  ),
+                                              ),
                                             ),
-                                            child: CircleAvatar(
-                                              radius: 40,
-                                              backgroundImage: NetworkImage(
-                                                userData["userImageUrl"],
+                                          ),
+                                          // const SizedBox(
+                                          //   height: 7,
+                                          // ),
+                                          Expanded(
+                                            flex: 2,
+                                            child: Text(
+                                              userData["username"],
+                                              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                                                // color: Theme.of(context).colorScheme.onSecondaryContainer,
+                                                fontWeight: FontWeight.bold,
+                                                // shadows: [
+                                                //   Shadow(
+                                                //     blurRadius: 5,
+                                                //     color: Colors.black.withOpacity(0.3),
+                                                //     offset: const Offset(0,2),
+                                                //   ),
+                                                // ],
+                                                ),
+                                                    
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex:2,                                          
+                                            child: Text(
+                                              userData["email"],
+                                              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                // shadows: [
+                                                //   Shadow(
+                                                //     blurRadius: 1.5,
+                                                //     color: Colors.black.withOpacity(0.3),
+                                                //     offset: const Offset(0,1.5),
+                                                //   ),
+                                                // ],
                                                 ),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 7,
-                                          ),
-                                          Text(
-                                            userData["username"],
-                                            style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                                              // color: Theme.of(context).colorScheme.onSecondaryContainer,
-                                              fontWeight: FontWeight.bold,
-                                              // shadows: [
-                                              //   Shadow(
-                                              //     blurRadius: 5,
-                                              //     color: Colors.black.withOpacity(0.3),
-                                              //     offset: const Offset(0,2),
-                                              //   ),
-                                              // ],
-                                              ),
-                                                  
-                                          ),
-                                          Text(
-                                            userData["email"],
-                                            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                              fontWeight: FontWeight.bold,
-                                              // shadows: [
-                                              //   Shadow(
-                                              //     blurRadius: 1.5,
-                                              //     color: Colors.black.withOpacity(0.3),
-                                              //     offset: const Offset(0,1.5),
-                                              //   ),
-                                              // ],
-                                              ),
                                           ),
                                         ],
                                       );
@@ -136,28 +147,34 @@ class SideDrawer extends StatelessWidget {
                                   context,
                                   Icons.history,
                                   "History and Progress",
-                                  (){},
+                                  (){
+                                    Navigator.of(context).pushNamed(HistoryAndProgress.routeName);
+                                  },
                                   ),
                                 _listTileBuilder(
                                   context,
                                   Icons.feedback, 
                                   "Feedback",
-                                  (){},
+                                  (){
+                                    Navigator.of(context).pushNamed(FeedbackScreen.routeName);
+                                  },
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height:200,
                                   ),
-                                _listTileBuilder(
-                                  context,
-                                  Icons.logout, 
-                                  "Logout",                                                                      
-                                  (){
-                                    // print("logout initiated");
-                                    Provider.of<Auth>(context,listen: false).logout(context);    
-                                    // Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                                    // Navigator.of(context).pushNamed('/');
-                                    },                                 
-                                  )
+                                Expanded(
+                                  child: _listTileBuilder(
+                                    context,
+                                    Icons.logout, 
+                                    "Logout",                                                                      
+                                    (){
+                                      // print("logout initiated");
+                                      Provider.of<Auth>(context,listen: false).logout(context);    
+                                      // Navigator.of(context).popUntil(ModalRoute.withName('/'));
+                                      // Navigator.of(context).pushNamed('/');
+                                      },                                 
+                                    ),
+                                )
                               ],
                             ),
                           ),

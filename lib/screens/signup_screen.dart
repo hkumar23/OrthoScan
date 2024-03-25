@@ -76,7 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
       return;
     }catch(err){
-      // print(err);
+      debugPrint("Error: $err");
       setState(() {
         isLoading=false;
       });
@@ -87,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // resizeToAvoidBottomInset: false,
       body: isLoading 
       ? const Center(child: CircularProgressIndicator(),) 
       : Stack(

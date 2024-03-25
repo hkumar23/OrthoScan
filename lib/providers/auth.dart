@@ -35,7 +35,6 @@ class Auth with ChangeNotifier{
     // notifyListeners();
     // print("logged out");
   }
-
   Future<void> authenticate({
     required BuildContext context,
     required String email,
@@ -52,7 +51,7 @@ class Auth with ChangeNotifier{
         userId=authResponse.user!.uid;
         // print("User ID: $userId");
 
-        final ref=FirebaseStorage.instance.ref().child("user_image").child(userId! + '.png');
+        final ref=FirebaseStorage.instance.ref().child("user_image").child('${userId!}.png');
         await ref.putFile(userData!["userImageFile"] as File);
         userImageUrl=await ref.getDownloadURL();
         // print("user Image: $userImageUrl");
@@ -74,6 +73,7 @@ class Auth with ChangeNotifier{
 
         userEmail=userLoginData!["useremail"];
         userName=userLoginData["username"];
+        userImageUrl=userLoginData["userImageUrl"];
         // print(fetchedUserData);
       }
       // print("Authentication Successfull");
@@ -82,7 +82,7 @@ class Auth with ChangeNotifier{
           SnackBar(
             backgroundColor: Theme.of(context).colorScheme.error,
             content: Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Text(err.message.toString()),
           ))
         );
@@ -90,6 +90,23 @@ class Auth with ChangeNotifier{
     }
     // print("Authentication completed");
     // notifyListeners();
+  }
+
+  void resetPassword(String email,BuildContext context) async {
+    try{
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } catch(err){
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            content: Padding(
+              padding: const EdgeInsets.all(5),
+
+              child: Text(err.toString()),
+          ))
+        );
+        rethrow;
+    }
   }
 
 }

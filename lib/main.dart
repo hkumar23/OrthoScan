@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:orthoscan2/providers/auth.dart';
+import 'package:orthoscan2/screens/feedback_screen.dart';
+import 'package:orthoscan2/screens/historyandprogress_screen.dart';
 import 'package:orthoscan2/screens/home_screen.dart';
 import 'package:orthoscan2/screens/login_screen.dart';
 import 'package:orthoscan2/screens/problem_detection_screen.dart';
@@ -80,6 +82,8 @@ class _MyAppState extends State<MyApp> {
               ProfileScreen.routeName :(context) => ProfileScreen(toggleAppTheme,themeBrightness),
               LoginScreen.routeName : (context) => LoginScreen(),
               SignupScreen.routeName : (context) => SignupScreen(),
+              HistoryAndProgress.routeName : (context) => HistoryAndProgress(),
+              FeedbackScreen.routeName : (context)=> FeedbackScreen(),
             },
           );
   }),
