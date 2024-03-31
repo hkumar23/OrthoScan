@@ -39,11 +39,12 @@ dependencies:
   cloud_firestore: ^4.9.3
   firebase_auth: ^4.10.1
   provider: ^6.1.1
-  image_picker: ^1.0.5
+  image_picker: ^1.0.7
   firebase_storage: ^11.5.6
   carousel_slider: ^4.2.1
-  google_fonts: ^6.1.0
+  google_fonts: 6.0.0
   tflite_flutter: ^0.10.4
+  scidart: ^0.0.2-dev.12
   
 dev_dependencies:
   flutter_test:
@@ -66,10 +67,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
+# flutter:
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/pose_landmark_full.tflite
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
