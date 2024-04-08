@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:orthoscan2/google_mlkit_pose_detection/pose_detector_view.dart';
-import 'package:orthoscan2/widgets/side_drawer.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:orthoscan2/knock_knee_detection/vision_detector_views/pose_detector_view.dart';
 
-class ProblemDetectionScreen extends StatefulWidget {
+import 'package:orthoscan2/widgets/side_drawer.dart';
+
+class ProblemDetectionScreen extends StatelessWidget {
   static const routeName = "/problem-detection";
 
   const ProblemDetectionScreen({super.key});
 
-  @override
-  State<ProblemDetectionScreen> createState() => _ProblemDetectionScreenState();
-}
-
-class _ProblemDetectionScreenState extends State<ProblemDetectionScreen> {
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments as String;
@@ -31,7 +26,7 @@ class _ProblemDetectionScreenState extends State<ProblemDetectionScreen> {
             onTap: () async {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const PoseDetectorView(),
+                  builder: (context) => PoseDetectorView(),
                 ),
               );
             },

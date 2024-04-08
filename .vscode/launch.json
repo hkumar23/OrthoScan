@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "orthoscan2",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "orthoscan2 (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "orthoscan2 (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "google_mlkit_pose_detection",
+            "cwd": "lib\\knock_knee_detection\\google_mlkit_pose_detection",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "google_mlkit_pose_detection (profile mode)",
+            "cwd": "lib\\knock_knee_detection\\google_mlkit_pose_detection",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "google_mlkit_pose_detection (release mode)",
+            "cwd": "lib\\knock_knee_detection\\google_mlkit_pose_detection",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
