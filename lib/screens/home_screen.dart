@@ -91,32 +91,29 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => PoseDetectorView()),
-                      )
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   ProblemDetectionScreen.routeName,
-                      //   arguments:"Flat Feet Detection",
-                      //   );
-                      ,
-                      child: CategoryItem(
-                        "https://i.pinimg.com/564x/55/1f/82/551f82e73017b0f640bf424c91dc6571.jpg",
-                        "Flat Feet Detection",
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 7,
-                    ),
+                    // GestureDetector(
+                    //   onTap: () => Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //         builder: (context) => PoseDetectorView()),
+                    //   )
+                    //   // Navigator.pushNamed(
+                    //   //   context,
+                    //   //   ProblemDetectionScreen.routeName,
+                    //   //   arguments:"Flat Feet Detection",
+                    //   //   );
+                    //   ,
+                    //   child: CategoryItem(
+                    //     "https://i.pinimg.com/564x/55/1f/82/551f82e73017b0f640bf424c91dc6571.jpg",
+                    //     "Flat Feet Detection",
+                    //   ),
+                    // // ),
+                    // const SizedBox(
+                    //   height: 7,
+                    // ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          ProblemDetectionScreen.routeName,
-                          arguments: "Knock Knee Detection",
-                        );
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => PoseDetectorView()));
                       },
                       child: CategoryItem(
                         "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",
@@ -128,11 +125,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          ProblemDetectionScreen.routeName,
-                          arguments: "Interactive Exercises",
-                        );
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProblemDetectionScreen()));
                       },
                       child: CategoryItem(
                         "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",

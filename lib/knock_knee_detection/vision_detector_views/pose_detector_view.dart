@@ -7,6 +7,8 @@ import 'detector_view.dart';
 import 'painters/pose_painter.dart';
 
 class PoseDetectorView extends StatefulWidget {
+  const PoseDetectorView({super.key});
+
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -47,6 +49,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _text = '';
     });
     final poses = await _poseDetector.processImage(inputImage);
+    // print(poses[0].landmarks);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = PosePainter(
