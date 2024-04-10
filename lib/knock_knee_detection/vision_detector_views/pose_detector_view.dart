@@ -49,7 +49,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       _text = '';
     });
     final poses = await _poseDetector.processImage(inputImage);
-    // print(poses[0].landmarks);
+    // print(poses[0]);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {
       final painter = PosePainter(
@@ -60,6 +60,43 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       );
       _customPaint = CustomPaint(painter: painter);
     } else {
+      // poses[0].landmarks.forEach((key, value) {
+      //   print("$key: $value");
+      // });
+      final coordinates = {
+        "left_knee": {
+          "x": poses[0].landmarks[PoseLandmarkType.leftKnee]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.leftKnee]!.y,
+        },
+        "left_ankle": {
+          "x": poses[0].landmarks[PoseLandmarkType.leftAnkle]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.leftAnkle]!.y,
+        },
+        "right_knee": {
+          "x": poses[0].landmarks[PoseLandmarkType.rightKnee]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.rightKnee]!.y,
+        },
+        "right_ankle:": {
+          "x": poses[0].landmarks[PoseLandmarkType.rightAnkle]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.rightAnkle]!.y,
+        },
+        "left_hip:": {
+          "x": poses[0].landmarks[PoseLandmarkType.leftHip]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.leftHip]!.y,
+        },
+        "right_hip:": {
+          "x": poses[0].landmarks[PoseLandmarkType.rightHip]!.x,
+          "y": poses[0].landmarks[PoseLandmarkType.rightHip]!.y,
+        },
+      };
+      // print(
+      //     "Left Knee: ${coordinates["lk"]!["x"]}, ${coordinates["lk"]!["y"]}");
+      // print(
+      //     "Left Ankle: ${coordinates["la"]!["x"]}, ${coordinates["la"]!["y"]}");
+      // print(
+      //     "Right Knee : ${coordinates["rk"]!["x"]}, ${coordinates["rk"]!["y"]}");
+      // print(
+      //     "Right Ankle: ${coordinates["ra"]!["x"]}, ${coordinates["ra"]!["y"]}");
       _text = 'Poses found: ${poses.length}\n\n';
       // TODO: set _customPaint to draw landmarks on top of image
       _customPaint = null;

@@ -19,3 +19,7 @@ Future<String> getAssetPath(String asset) async {
 Future<String> getLocalPath(String path) async {
   return '${(await getApplicationSupportDirectory()).path}/$path';
 }
+
+int percentOfKnockKnees() {
+  return 50;
+}
