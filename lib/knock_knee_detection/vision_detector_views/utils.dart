@@ -20,6 +20,6 @@ Future<String> getLocalPath(String path) async {
   return '${(await getApplicationSupportDirectory()).path}/$path';
 }
 
-int percentOfKnockKnees() {
+Future<int> percentOfKnockKnees() async {
   return 50;
 }

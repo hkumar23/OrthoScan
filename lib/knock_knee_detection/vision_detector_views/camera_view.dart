@@ -6,14 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 class CameraView extends StatefulWidget {
-  const CameraView(
-      {super.key,
-      required this.customPaint,
-      required this.onImage,
-      this.onCameraFeedReady,
-      this.onDetectorViewModeChanged,
-      this.onCameraLensDirectionChanged,
-      this.initialCameraLensDirection = CameraLensDirection.back});
+  const CameraView({
+    super.key,
+    required this.customPaint,
+    required this.onImage,
+    this.onCameraFeedReady,
+    this.onDetectorViewModeChanged,
+    this.onCameraLensDirectionChanged,
+    this.initialCameraLensDirection = CameraLensDirection.back,
+    this.percentText, //BYME:
+  });
 
   final CustomPaint? customPaint;
   final Function(InputImage inputImage) onImage;
@@ -21,7 +23,7 @@ class CameraView extends StatefulWidget {
   final VoidCallback? onDetectorViewModeChanged;
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final CameraLensDirection initialCameraLensDirection;
-
+  final int? percentText; //BYME:
   @override
   State<CameraView> createState() => _CameraViewState();
 }
@@ -85,17 +87,47 @@ class _CameraViewState extends State<CameraView> {
                 ? const Center(
                     child: Text('Changing camera lens'),
                   )
-                : CameraPreview(
-                    _controller!,
-                    child: widget.customPaint,
-                  ),
+                : CameraPreview(_controller!,
+                    child: Stack(
+                      children: [
+                        if (widget.customPaint != null) widget.customPaint!,
+                        _resultBox(),
+                      ],
+                    )),
           ),
           _backButton(),
           _switchLiveCameraToggle(),
           _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
+          // _resultBox(), //BYME:
         ],
+      ),
+    );
+  }
+
+  Widget _resultBox() {
+    //BYME:
+    return Positioned(
+      bottom: 70,
+      right: 8,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        alignment: Alignment.center,
+        width: 200,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.white54,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Text(
+          softWrap: true,
+          "You have ${widget.percentText}% of knock knees",
+          style: const TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 20,
+          ),
+        ),
       ),
     );
   }

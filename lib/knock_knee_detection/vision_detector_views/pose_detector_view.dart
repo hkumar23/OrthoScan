@@ -2,6 +2,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
+import 'package:orthoscan2/knock_knee_detection/vision_detector_views/utils.dart';
+import 'package:orthoscan2/models/coordinates.dart';
 
 import 'detector_view.dart';
 import 'painters/pose_painter.dart';
@@ -22,6 +24,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
 
+  int _percentText = 0; //BYME:
+
   @override
   void dispose() async {
     _canProcess = false;
@@ -38,15 +42,18 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       onImage: _processImage,
       initialCameraLensDirection: _cameraLensDirection,
       onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
+      percentText: _percentText, //BYME:
     );
   }
 
   Future<void> _processImage(InputImage inputImage) async {
+    // print("IMAGE METADATA: ${inputImage.metadata!.size.height}");
     if (!_canProcess) return;
     if (_isBusy) return;
     _isBusy = true;
     setState(() {
       _text = '';
+      _percentText = 0;
     });
     final poses = await _poseDetector.processImage(inputImage);
     // print(poses[0]);
@@ -59,11 +66,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         _cameraLensDirection,
       );
       _customPaint = CustomPaint(painter: painter);
+      _percentText = await percentOfKnockKnees();
+      print("You have $_percentText% knock knees.");
     } else {
       // poses[0].landmarks.forEach((key, value) {
       //   print("$key: $value");
       // });
-      final coordinates = {
+
+      final coordinatesMap = {
         "left_knee": {
           "x": poses[0].landmarks[PoseLandmarkType.leftKnee]!.x,
           "y": poses[0].landmarks[PoseLandmarkType.leftKnee]!.y,
@@ -89,17 +99,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           "y": poses[0].landmarks[PoseLandmarkType.rightHip]!.y,
         },
       };
-      // print(
-      //     "Left Knee: ${coordinates["lk"]!["x"]}, ${coordinates["lk"]!["y"]}");
-      // print(
-      //     "Left Ankle: ${coordinates["la"]!["x"]}, ${coordinates["la"]!["y"]}");
-      // print(
-      //     "Right Knee : ${coordinates["rk"]!["x"]}, ${coordinates["rk"]!["y"]}");
-      // print(
-      //     "Right Ankle: ${coordinates["ra"]!["x"]}, ${coordinates["ra"]!["y"]}");
+      // print(percentOfKnockKnees());
+      // print(obj);
+      // print(coordinates);
       _text = 'Poses found: ${poses.length}\n\n';
+      _percentText = await percentOfKnockKnees(); //BYME:
       // TODO: set _customPaint to draw landmarks on top of image
       _customPaint = null;
+      // Coordinates obj = Coordinates.fromJson(coordinatesMap);
     }
     _isBusy = false;
     if (mounted) {

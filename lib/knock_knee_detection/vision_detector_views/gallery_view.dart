@@ -9,15 +9,18 @@ import 'package:image_picker/image_picker.dart';
 import 'utils.dart';
 
 class GalleryView extends StatefulWidget {
-  const GalleryView(
-      {super.key,
-      required this.title,
-      this.text,
-      required this.onImage,
-      required this.onDetectorViewModeChanged});
+  const GalleryView({
+    super.key,
+    required this.title,
+    this.text,
+    required this.onImage,
+    required this.onDetectorViewModeChanged,
+    this.percentText, //by me
+  });
 
   final String title;
   final String? text;
+  final int? percentText; //by me
   final Function(InputImage inputImage) onImage;
   final Function()? onDetectorViewModeChanged;
 
@@ -98,9 +101,15 @@ class _GalleryViewState extends State<GalleryView> {
       if (_image != null)
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(
-              '${_path == null ? '' : 'Image path: $_path'}\n\n${widget.text ?? ''}'),
+          child: Text(_path == null
+              ? ''
+              : 'You have ${widget.percentText}% of knock knees\n'),
         ),
+      // Padding(
+      //   padding: const EdgeInsets.all(16.0),
+      //   child: Text(
+      //       '${_path == null ? '' : 'Image path: $_path'}\n\n${widget.text ?? ''}'),
+      // ),
     ]);
   }
 
