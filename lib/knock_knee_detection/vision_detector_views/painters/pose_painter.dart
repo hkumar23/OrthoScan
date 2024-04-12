@@ -22,17 +22,17 @@ class PosePainter extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0
-      ..color = Colors.green;
+      ..color = const Color.fromARGB(255, 0, 255, 21);
 
     final leftPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = Colors.yellow;
+      ..color = const Color.fromARGB(255, 255, 234, 0);
 
     final rightPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3.0
-      ..color = Colors.blueAccent;
+      ..color = const Color.fromARGB(255, 255, 234, 0);
 
     for (final pose in poses) {
       pose.landmarks.forEach((_, landmark) {

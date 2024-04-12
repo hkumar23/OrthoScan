@@ -1,4 +1,34 @@
-{
+{   
+    "todo-tree.highlights.useColourScheme": true,
+    "todo-tree.highlights.customHighlight": {
+        "BUG": {
+            "icon": "bug"
+        },
+        "HACK": {
+            "icon": "tools"
+        },
+        "FIXME": {
+            "icon": "flame"
+        },
+        "XXX": {
+            "icon": "x"
+        },
+        "[ ]": {
+            "icon": "issue-draft"
+        },
+        "[x]": {
+            "icon": "issue-closed"
+        },
+        "BYME":{
+            "icon":"star",
+            "background": "#00b3ff",
+        },
+        "TODO": {
+            "icon": "check",
+            "background": "#fff200",
+            "foreground": "#000000"
+        }
+    },
     "todo-tree.general.tags": [
         "BUG",
         "HACK",
