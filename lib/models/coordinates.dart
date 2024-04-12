@@ -1,8 +1,3 @@
-/* 
-// Example Usage
-Map<String, dynamic> map = jsonDecode(<myJSONString>);
-var myRootNode = Root.fromJson(map);
-*/
 class LeftAnkle {
   int? x;
   int? y;

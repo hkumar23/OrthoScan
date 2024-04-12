@@ -87,20 +87,23 @@ class _CameraViewState extends State<CameraView> {
                 ? const Center(
                     child: Text('Changing camera lens'),
                   )
-                : CameraPreview(_controller!,
-                    child: Stack(
-                      children: [
-                        if (widget.customPaint != null) widget.customPaint!,
-                        _resultBox(),
-                      ],
-                    )),
+                : CameraPreview(
+                    _controller!,
+                    child: widget.customPaint,
+                    //   Stack(
+                    // children: [
+                    //   widget.customPaint!,
+                    //   _resultBox(),
+                    // ],
+                    // ),
+                  ),
           ),
           _backButton(),
           _switchLiveCameraToggle(),
           _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
-          // _resultBox(), //BYME:
+          _resultBox(), //BYME:
         ],
       ),
     );
