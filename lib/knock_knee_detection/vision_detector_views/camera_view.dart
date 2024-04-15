@@ -23,7 +23,7 @@ class CameraView extends StatefulWidget {
   final VoidCallback? onDetectorViewModeChanged;
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final CameraLensDirection initialCameraLensDirection;
-  final int? percentText; //BYME:
+  final String? percentText; //BYME:
   @override
   State<CameraView> createState() => _CameraViewState();
 }

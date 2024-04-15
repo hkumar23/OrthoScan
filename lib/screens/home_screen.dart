@@ -113,7 +113,7 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => PoseDetectorView()));
+                            builder: (context) => const PoseDetectorView()));
                       },
                       child: CategoryItem(
                         "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",
@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ProblemDetectionScreen()));
+                            builder: (context) => const PoseDetectorView()));
                       },
                       child: CategoryItem(
                         "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",

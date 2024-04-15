@@ -31,7 +31,7 @@ class DetectorView extends StatefulWidget {
   final Function(DetectorViewMode mode)? onDetectorViewModeChanged;
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final CameraLensDirection initialCameraLensDirection;
-  final int? percentText; //BYME:
+  final String? percentText; //BYME:
 
   @override
   State<DetectorView> createState() => _DetectorViewState();

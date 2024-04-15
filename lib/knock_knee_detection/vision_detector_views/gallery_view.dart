@@ -20,7 +20,7 @@ class GalleryView extends StatefulWidget {
 
   final String title;
   final String? text;
-  final int? percentText; //by me
+  final String? percentText; //by me
   final Function(InputImage inputImage) onImage;
   final Function()? onDetectorViewModeChanged;
 

@@ -23,7 +23,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
 
-  int _percentText = 0; //BYME:
+  String _percentText = "0"; //BYME:
   // Random random = Random();
 
   @override
