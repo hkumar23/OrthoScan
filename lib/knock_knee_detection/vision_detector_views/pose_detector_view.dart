@@ -56,8 +56,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       // _percentText = 0;
     });
     final poses = await _poseDetector.processImage(inputImage);
-    _percentText = await percentOfKnockKnees(poses: poses); //BYME:
+    _percentText = percentOfKnockKnees(poses: poses); //BYME:
 
+    print("MODEL OUTPUT: $_percentText :D:D");
     // print(poses[0]);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {

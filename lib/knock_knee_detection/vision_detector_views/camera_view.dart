@@ -125,7 +125,7 @@ class _CameraViewState extends State<CameraView> {
         ),
         child: Text(
           softWrap: true,
-          "You have ${widget.percentText}% of knock knees",
+          "You have ${widget.percentText}",
           style: const TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 20,

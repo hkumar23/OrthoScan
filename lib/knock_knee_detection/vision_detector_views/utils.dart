@@ -7,6 +7,13 @@ import 'package:orthoscan2/models/coordinates.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
+class Point {
+  final double x;
+  final double y;
+
+  Point(this.x, this.y);
+}
+
 Future<String> getAssetPath(String asset) async {
   final path = await getLocalPath(asset);
   await Directory(dirname(path)).create(recursive: true);
@@ -23,14 +30,8 @@ Future<String> getLocalPath(String path) async {
   return '${(await getApplicationSupportDirectory()).path}/$path';
 }
 
-class Point {
-  final double x;
-  final double y;
-
-  Point(this.x, this.y);
-}
-
-Future<String> percentOfKnockKnees({required List<Pose> poses}) async {
+String percentOfKnockKnees({required List<Pose> poses}) {
+  print("FUNCTION CALLED");
   final coordinatesMap = {
     "left_knee": {
       "x": poses[0].landmarks[PoseLandmarkType.leftKnee]!.x,
@@ -58,27 +59,28 @@ Future<String> percentOfKnockKnees({required List<Pose> poses}) async {
     },
   };
 
-  Point hip = Point(coordinatesMap["left_hip"]!["x"]!.toDouble(),
-      coordinatesMap["left_hip"]!["y"]!.toDouble());
-  Point knee = Point(coordinatesMap["left_knee"]!["x"]!.toDouble(),
-      coordinatesMap["left_knee"]!["y"]!.toDouble());
-  Point ankle = Point(coordinatesMap["left_ankle"]!["x"]!.toDouble(),
-      coordinatesMap["left_ankle"]!["y"]!.toDouble());
+  double hipx = coordinatesMap["left_hip"]?["x"]?.toDouble() ?? 0.0;
+  double hipy = coordinatesMap["left_hip"]?["y"]?.toDouble() ?? 0.0;
+  double kneex = coordinatesMap["left_knee"]?["x"]?.toDouble() ?? 0.0;
+  double kneey = coordinatesMap["left_knee"]?["y"]?.toDouble() ?? 0.0;
+  double anklex = coordinatesMap["left_ankle"]?["x"]?.toDouble() ?? 0.0;
+  double ankley = coordinatesMap["left_ankle"]?["y"]?.toDouble() ?? 0.0;
 
   // LEFT ANGLE
 
   // Vector representations of the lines
-  Point hipToKnee = Point(knee.x - hip.x, knee.y - hip.y);
-  Point kneeToAnkle = Point(ankle.x - knee.x, ankle.y - knee.y);
+  double hipToKneex = kneex - hipx;
+  double hipToKneey = kneey - hipy;
+  double kneeToAnklex = anklex - kneex;
+  double kneeToAnkley = ankley - kneey;
 
   // Dot product of the vectors
-  double dotProduct =
-      (hipToKnee.x * kneeToAnkle.x) + (hipToKnee.y * kneeToAnkle.y);
+  double dotProduct = (hipToKneex * kneeToAnklex) + (hipToKneey * kneeToAnkley);
 
   // Magnitudes of the vectors
-  double hipToKneeMagnitude = sqrt(pow(hipToKnee.x, 2) + pow(hipToKnee.y, 2));
+  double hipToKneeMagnitude = sqrt(pow(hipToKneex, 2) + pow(hipToKneey, 2));
   double kneeToAnkleMagnitude =
-      sqrt(pow(kneeToAnkle.x, 2) + pow(kneeToAnkle.y, 2));
+      sqrt(pow(kneeToAnklex, 2) + pow(kneeToAnkley, 2));
 
   // Calculate the angle between the lines
   double cosAngle = dotProduct / (hipToKneeMagnitude * kneeToAnkleMagnitude);
@@ -89,45 +91,42 @@ Future<String> percentOfKnockKnees({required List<Pose> poses}) async {
 
   // RIGHT ANGLE
 
-  Point hip_ = Point(coordinatesMap["right_hip"]!["x"]!.toDouble(),
-      coordinatesMap["right_hip"]!["y"]!.toDouble());
-  Point knee_ = Point(coordinatesMap["right_knee"]!["x"]!.toDouble(),
-      coordinatesMap["right_knee"]!["y"]!.toDouble());
-  Point ankle_ = Point(coordinatesMap["right_ankle"]!["x"]!.toDouble(),
-      coordinatesMap["right_ankle"]!["y"]!.toDouble());
+  hipx = coordinatesMap["right_hip"]?["x"]?.toDouble() ?? 0.0;
+  hipy = coordinatesMap["right_hip"]?["y"]?.toDouble() ?? 0.0;
+  kneex = coordinatesMap["right_knee"]?["x"]?.toDouble() ?? 0.0;
+  kneey = coordinatesMap["right_knee"]?["y"]?.toDouble() ?? 0.0;
+  anklex = coordinatesMap["right_ankle"]?["x"]?.toDouble() ?? 0.0;
+  ankley = coordinatesMap["right_ankle"]?["y"]?.toDouble() ?? 0.0;
 
   // Vector representations of the lines
-  Point hipToKnee_ = Point(knee_.x - hip_.x, knee_.y - hip_.y);
-  Point kneeToAnkle_ = Point(ankle_.x - knee_.x, ankle_.y - knee_.y);
+  hipToKneex = kneex - hipx;
+  hipToKneey = kneey - hipy;
+  kneeToAnklex = anklex - kneex;
+  kneeToAnkley = ankley - kneey;
 
   // Dot product of the vectors
-  double dotProduct_ =
-      (hipToKnee_.x * kneeToAnkle_.x) + (hipToKnee_.y * kneeToAnkle_.y);
+  dotProduct = (hipToKneex * kneeToAnklex) + (hipToKneey * kneeToAnkley);
 
   // Magnitudes of the vectors
-  double hipToKneeMagnitude_ = sqrt(pow(hipToKnee.x, 2) + pow(hipToKnee.y, 2));
-  double kneeToAnkleMagnitude_ =
-      sqrt(pow(kneeToAnkle.x, 2) + pow(kneeToAnkle.y, 2));
+  hipToKneeMagnitude = sqrt(pow(hipToKneex, 2) + pow(hipToKneey, 2));
+  kneeToAnkleMagnitude = sqrt(pow(kneeToAnklex, 2) + pow(kneeToAnkley, 2));
 
   // Calculate the angle between the lines
-  double cosAngle_ =
-      dotProduct_ / (hipToKneeMagnitude_ * kneeToAnkleMagnitude_);
-  double angleInRadians_ = acos(cosAngle_);
+  cosAngle = dotProduct / (hipToKneeMagnitude * kneeToAnkleMagnitude);
+  angleInRadians = acos(cosAngle);
 
   // Convert radians to degrees
-
-  double angleInDegreesRight = angleInRadians_ * (180 / pi);
+  final angleInDegreesRight = angleInRadians * (180 / pi);
 
   final avgAngle = (angleInDegreesLeft + angleInDegreesRight) / 2;
-  final perc = max(100, avgAngle * 10);
+  final perc = min(100, avgAngle * 10);
+  if (kneex <= hipx) return "$perc% Knock Knees";
+  if (kneex > hipx) return "$perc% Bow Legs";
 
-  // if (knee.x <= hip.x) return "Knock Knees $perc%";
-  // if (knee.x > hip.x) return "Bow Legs $perc%";
-
-  return "45";
+  return "69";
 }
 
-// Future<String> percentOfKnockKnees({required List<Pose> poses}) async {
+// String percentOfKnockKnees({required List<Pose> poses}) {
 //   // final coordinates = Coordinates.fromJson(coordinatesMap);
 
 //   // Random random = Random();
