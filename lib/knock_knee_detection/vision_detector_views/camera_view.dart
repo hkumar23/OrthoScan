@@ -15,6 +15,7 @@ class CameraView extends StatefulWidget {
     this.onCameraLensDirectionChanged,
     this.initialCameraLensDirection = CameraLensDirection.back,
     this.percentText, //BYME:
+    required this.isExercise,
   });
 
   final CustomPaint? customPaint;
@@ -24,6 +25,7 @@ class CameraView extends StatefulWidget {
   final Function(CameraLensDirection direction)? onCameraLensDirectionChanged;
   final CameraLensDirection initialCameraLensDirection;
   final String? percentText; //BYME:
+  final bool isExercise;
   @override
   State<CameraView> createState() => _CameraViewState();
 }
@@ -100,7 +102,7 @@ class _CameraViewState extends State<CameraView> {
           ),
           _backButton(),
           _switchLiveCameraToggle(),
-          _detectionViewModeToggle(),
+          if (widget.isExercise == false) _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
           _resultBox(), //BYME:
@@ -125,7 +127,7 @@ class _CameraViewState extends State<CameraView> {
         ),
         child: Text(
           softWrap: true,
-          "You have ${widget.percentText}",
+          "${widget.percentText}",
           style: const TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 20,

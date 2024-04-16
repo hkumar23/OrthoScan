@@ -31,7 +31,7 @@ Future<String> getLocalPath(String path) async {
 }
 
 String percentOfKnockKnees({required List<Pose> poses}) {
-  print("FUNCTION CALLED");
+  // print("FUNCTION CALLED");
   final coordinatesMap = {
     "left_knee": {
       "x": poses[0].landmarks[PoseLandmarkType.leftKnee]!.x,
@@ -120,16 +120,12 @@ String percentOfKnockKnees({required List<Pose> poses}) {
 
   final avgAngle = (angleInDegreesLeft + angleInDegreesRight) / 2;
   final perc = min(100, avgAngle * 10);
-  if (kneex <= hipx) return "$perc% Knock Knees";
-  if (kneex > hipx) return "$perc% Bow Legs";
+  if (kneex <= hipx) return "You have $perc% Knock Knees";
+  if (kneex > hipx) return "You Have $perc% Bow Legs";
 
-  return "69";
+  return "Loading...";
 }
 
-// String percentOfKnockKnees({required List<Pose> poses}) {
-//   // final coordinates = Coordinates.fromJson(coordinatesMap);
-
-//   // Random random = Random();
-//   // return random.nextInt(100);
-//   return "90";
-// }
+String exerciseDetection({required List<Pose> poses}) {
+  return "You are doing the exercise right!";
+}

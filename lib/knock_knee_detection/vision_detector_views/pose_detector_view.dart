@@ -8,8 +8,10 @@ import 'detector_view.dart';
 import 'painters/pose_painter.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView({super.key});
-
+  const PoseDetectorView(
+      {required this.title, required this.isExercise, super.key});
+  final bool isExercise;
+  final String title;
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -22,8 +24,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   CustomPaint? _customPaint;
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
-
-  String _percentText = "0"; //BYME:
+  String _percentText = "Loading..."; //BYME:
   // Random random = Random();
 
   @override
@@ -36,13 +37,14 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   @override
   Widget build(BuildContext context) {
     return DetectorView(
-      title: 'Pose Detector',
+      title: widget.title,
       customPaint: _customPaint,
       text: _text,
       onImage: _processImage,
       initialCameraLensDirection: _cameraLensDirection,
       onCameraLensDirectionChanged: (value) => _cameraLensDirection = value,
       percentText: _percentText, //BYME:
+      isExercise: widget.isExercise, //BYME:
     );
   }
 
@@ -56,9 +58,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       // _percentText = 0;
     });
     final poses = await _poseDetector.processImage(inputImage);
-    _percentText = percentOfKnockKnees(poses: poses); //BYME:
 
-    print("MODEL OUTPUT: $_percentText :D:D");
+    if (widget.isExercise) {
+      _percentText = exerciseDetection(poses: poses); //BYME:
+    } else {
+      _percentText = percentOfKnockKnees(poses: poses); //BYME:
+    }
+    // print("MODEL OUTPUT: $_percentText :D:D");
     // print(poses[0]);
     if (inputImage.metadata?.size != null &&
         inputImage.metadata?.rotation != null) {

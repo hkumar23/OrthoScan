@@ -113,9 +113,12 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PoseDetectorView()));
+                            builder: (context) => const PoseDetectorView(
+                                  isExercise: false,
+                                  title: "Knock Knee Detection",
+                                )));
                       },
-                      child: CategoryItem(
+                      child: const CategoryItem(
                         "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",
                         "Knock Knee Detection",
                       ),
@@ -126,9 +129,12 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PoseDetectorView()));
+                            builder: (context) => const PoseDetectorView(
+                                  isExercise: true,
+                                  title: "Interactive Exercises",
+                                )));
                       },
-                      child: CategoryItem(
+                      child: const CategoryItem(
                         "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",
                         "Interactive Exercises",
                       ),
