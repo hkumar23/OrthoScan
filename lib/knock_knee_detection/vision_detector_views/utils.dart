@@ -45,19 +45,21 @@ String percentOfKnockKnees({required List<Pose> poses}) {
       "x": poses[0].landmarks[PoseLandmarkType.rightKnee]!.x,
       "y": poses[0].landmarks[PoseLandmarkType.rightKnee]!.y,
     },
-    "right_ankle:": {
+    "right_ankle": {
       "x": poses[0].landmarks[PoseLandmarkType.rightAnkle]!.x,
       "y": poses[0].landmarks[PoseLandmarkType.rightAnkle]!.y,
     },
-    "left_hip:": {
+    "left_hip": {
       "x": poses[0].landmarks[PoseLandmarkType.leftHip]!.x,
       "y": poses[0].landmarks[PoseLandmarkType.leftHip]!.y,
     },
-    "right_hip:": {
+    "right_hip": {
       "x": poses[0].landmarks[PoseLandmarkType.rightHip]!.x,
       "y": poses[0].landmarks[PoseLandmarkType.rightHip]!.y,
     },
   };
+
+  print(coordinatesMap);
 
   double hipx = coordinatesMap["left_hip"]?["x"]?.toDouble() ?? 0.0;
   double hipy = coordinatesMap["left_hip"]?["y"]?.toDouble() ?? 0.0;
@@ -119,9 +121,9 @@ String percentOfKnockKnees({required List<Pose> poses}) {
   final angleInDegreesRight = angleInRadians * (180 / pi);
 
   final avgAngle = (angleInDegreesLeft + angleInDegreesRight) / 2;
-  final perc = min(100, avgAngle * 10);
-  if (kneex <= hipx) return "$perc% Knock Knees";
-  if (kneex > hipx) return "$perc% Bow Legs";
+  final perc = min(100, avgAngle * 5).toStringAsFixed(1);
+  if (kneex > anklex) return "$perc% Knock Knee";
+  if (kneex <= anklex) return "$perc% Bow Legs";
 
   return "69";
 }
