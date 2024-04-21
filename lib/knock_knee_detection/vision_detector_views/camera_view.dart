@@ -105,13 +105,37 @@ class _CameraViewState extends State<CameraView> {
           if (widget.isExercise == false) _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
-          _resultBox(), //BYME:
+          widget.percentText!.contains("exercise")
+              ? _exerciseResultBox()
+              : _resultBox(),
+          // _exerciseResultBox() //BYME:
         ],
       ),
     );
   }
 
   Widget _resultBox() {
+    Color containerColor = Colors.white.withOpacity(0.6);
+    String txt = "";
+    if (widget.percentText != "Loading...") {
+      double percNum = double.parse(widget.percentText!);
+      if (percNum < 0) {
+        txt = "You have ${percNum.abs()}% bow legs";
+      } else {
+        txt = "You have $percNum% knock knees";
+      }
+
+      percNum = percNum.abs();
+      if (percNum < 30) {
+        containerColor = Colors.green.withOpacity(0.54);
+      } else if (percNum < 60) {
+        containerColor = Colors.yellow.withOpacity(0.6);
+      } else {
+        containerColor = Colors.red.withOpacity(0.6);
+      }
+    } else {
+      txt = "Loading...";
+    }
     //BYME:
     return Positioned(
       bottom: 70,
@@ -122,12 +146,40 @@ class _CameraViewState extends State<CameraView> {
         width: 200,
         height: 100,
         decoration: BoxDecoration(
-          color: Colors.white54,
+          color: containerColor,
+          // color: Colors.greenAccent.withOpacity(0.54),
+          // color: Colors.redAccent.withOpacity(0.6),
+          // color: Colors.yellowAccent.withOpacity(0.6),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Text(
           softWrap: true,
-          "${widget.percentText}",
+          txt,
+          style: const TextStyle(
+            color: Color.fromARGB(255, 0, 0, 0),
+            fontSize: 20,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _exerciseResultBox() {
+    return Positioned(
+      bottom: 70,
+      right: 8,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        alignment: Alignment.center,
+        width: 200,
+        height: 100,
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.6),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Text(
+          softWrap: true,
+          widget.percentText!,
           style: const TextStyle(
             color: Color.fromARGB(255, 0, 0, 0),
             fontSize: 20,

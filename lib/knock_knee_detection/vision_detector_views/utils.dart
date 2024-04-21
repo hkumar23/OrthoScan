@@ -59,7 +59,7 @@ String percentOfKnockKnees({required List<Pose> poses}) {
     },
   };
 
-  print(coordinatesMap);
+  // print(coordinatesMap);
 
   double hipx = coordinatesMap["left_hip"]?["x"]?.toDouble() ?? 0.0;
   double hipy = coordinatesMap["left_hip"]?["y"]?.toDouble() ?? 0.0;
@@ -122,8 +122,8 @@ String percentOfKnockKnees({required List<Pose> poses}) {
 
   final avgAngle = (angleInDegreesLeft + angleInDegreesRight) / 2;
   final perc = min(100, avgAngle * 5).toStringAsFixed(1);
-  if (kneex > anklex) return "$perc% Knock Knee";
-  if (kneex <= anklex) return "$perc% Bow Legs";
+  if (kneex > anklex) return perc; // Knock knees
+  if (kneex <= anklex) return "-$perc"; // Bow legs
 
   return "Loading...";
 }

@@ -12,16 +12,16 @@ class HomeScreen extends StatelessWidget {
   Brightness themeBrightness;
   void Function() toggleAppTheme;
   final bannerItemsList = [
-    BannerItem(
-        imageUrl:
-            "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2021/11/plantar_fasciitis_GettyImages1305836714_Thumb-732x549.jpg?w=756&h=567",
-        titleText: "Discover Your Foot Health",
-        subtitleText: "Identify and Improve Your Feet's Condition"),
-    BannerItem(
-        imageUrl:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfBGRaAjqmWVTH5pEsPL36lNriPVJ5JCHkg9MeXXdHcdpOJkKZND5GumBq_fF4gqjAB5w&usqp=CAU",
-        titleText: "Flat Feet? Find Out Now!",
-        subtitleText: "Assess Your Foot Arch with our Advanced Tool"),
+    // BannerItem(
+    //     imageUrl:
+    //         "https://i0.wp.com/post.medicalnewstoday.com/wp-content/uploads/sites/3/2021/11/plantar_fasciitis_GettyImages1305836714_Thumb-732x549.jpg?w=756&h=567",
+    //     titleText: "Discover Your Foot Health",
+    //     subtitleText: "Identify and Improve Your Feet's Condition"),
+    // BannerItem(
+    //     imageUrl:
+    //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfBGRaAjqmWVTH5pEsPL36lNriPVJ5JCHkg9MeXXdHcdpOJkKZND5GumBq_fF4gqjAB5w&usqp=CAU",
+    //     titleText: "Flat Feet? Find Out Now!",
+    //     subtitleText: "Assess Your Foot Arch with our Advanced Tool"),
     BannerItem(
         imageUrl:
             "https://images.ctfassets.net/hjcv6wdwxsdz/1AKTXAJYcLZuM2oOzQIfM4/651a435fa19bd30cc91cc2bac81620aa/Man-touching-his-toes-while-stretching-his-leg-sitting-on-yoga-mat.jpg?w=2048&h=1366&fl=progressive&q=50&fm=jpg",
@@ -37,6 +37,11 @@ class HomeScreen extends StatelessWidget {
             "https://www.solutionanalysts.com/blog/wp-content/uploads/2021/05/users-of-health-and-fitness-apps.jpg",
         titleText: "Monitor Your Health Journey",
         subtitleText: "Visualize Your Improvement Over Time"),
+    BannerItem(
+        imageUrl:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzIDRmrWalJ3Aj-KOSKr9OcOecSuICNJ6c5_e6-QNLVQ&s",
+        titleText: "Correct Your Knock Knees",
+        subtitleText: "Achieve Proper Alignment with Interactive Exercises"),
   ];
   @override
   Widget build(BuildContext context) {
