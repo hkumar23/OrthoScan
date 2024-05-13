@@ -124,7 +124,6 @@ String percentOfKnockKnees({required List<Pose> poses}) {
   final perc = min(100, avgAngle * 5).toStringAsFixed(1);
   if (kneex > anklex) return perc; // Knock knees
   if (kneex <= anklex) return "-$perc"; // Bow legs
-
   return "Loading...";
 }
 

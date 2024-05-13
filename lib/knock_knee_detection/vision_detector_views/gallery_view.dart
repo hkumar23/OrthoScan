@@ -36,7 +36,6 @@ class _GalleryViewState extends State<GalleryView> {
   @override
   void initState() {
     super.initState();
-
     _imagePicker = ImagePicker();
   }
 
@@ -87,9 +86,11 @@ class _GalleryViewState extends State<GalleryView> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
-          child: const Text('From Gallery'),
-          onPressed: () => _getImage(ImageSource.gallery),
-        ),
+            child: const Text('From Gallery'),
+            onPressed: () {
+              // print("FROM GALLERY BUTTON PRESSED");
+              _getImage(ImageSource.gallery);
+            }),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -101,9 +102,11 @@ class _GalleryViewState extends State<GalleryView> {
       if (_image != null)
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(_path == null
-              ? ''
-              : 'You have ${widget.percentText}% of knock knees\n'),
+          child: widget.percentText == "Loading..."
+              ? Text(widget.percentText!)
+              : Text(double.parse(widget.percentText!) < 0
+                  ? 'You have ${-1 * double.parse(widget.percentText!)}% of Bow Legs\n'
+                  : 'You have ${widget.percentText}% of knock knees\n'),
         ),
       // Padding(
       //   padding: const EdgeInsets.all(16.0),
@@ -113,7 +116,8 @@ class _GalleryViewState extends State<GalleryView> {
     ]);
   }
 
-  Future _getImage(ImageSource source) async {
+  void _getImage(ImageSource source) async {
+    // print("GET IMAGE FUNCTION CALLED");
     setState(() {
       _image = null;
       _path = null;
@@ -183,6 +187,7 @@ class _GalleryViewState extends State<GalleryView> {
   }
 
   Future _processFile(String path) async {
+    // print("PROCESS FILE FUNCTION CALLED");
     setState(() {
       _image = File(path);
     });

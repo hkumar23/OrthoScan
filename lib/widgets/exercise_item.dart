@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:orthoscan2/knock_knee_detection/vision_detector_views/pose_detector_view.dart';
+
+class ExcerciseItem extends StatelessWidget {
+  const ExcerciseItem({
+    super.key,
+    required this.imageUrl,
+    required this.exerciseName,
+    required this.gifUrl,
+  });
+  final String imageUrl;
+  final String exerciseName;
+  final String gifUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    final deviceSize = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text(exerciseName),
+                content: Image.asset(
+                  gifUrl,
+                  fit: BoxFit.cover,
+                  height: deviceSize.height * 0.25,
+                  width: deviceSize.height * 0.25,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Close"),
+                  ),
+                  FilledButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => PoseDetectorView(
+                                title: exerciseName, isExercise: true),
+                          ),
+                        );
+                      },
+                      child: const Text("Start Exercise")),
+                ],
+              );
+            });
+      },
+      child: Container(
+        // alignment: Alignment.bottomRight,
+        height: deviceSize.height * 0.25,
+        width: deviceSize.width * 0.80,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(17)),
+          border: Border.all(
+            color: Theme.of(context).colorScheme.primary,
+            width: 2,
+          ),
+          image: DecorationImage(
+            image: AssetImage(
+              imageUrl,
+            ),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          alignment: Alignment.bottomLeft,
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.transparent, Colors.black.withOpacity(0.9)],
+            ),
+          ),
+          child: Text(
+            exerciseName,
+            style: TextStyle(
+              fontSize: deviceSize.width * 0.25 * 0.3,
+              color: Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

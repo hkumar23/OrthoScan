@@ -49,25 +49,25 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> _processImage(InputImage inputImage) async {
-    // print("IMAGE METADATA: ${inputImage.metadata!.size.height}");
+    // print("IMAGE METADATA: ${inputImage.metadata!}");
+    // print("PROCESSING IMAGE...");
+    bool isLiveDetection = inputImage.metadata?.size != null &&
+        inputImage.metadata?.rotation != null; //BYME
     if (!_canProcess) return;
-    if (_isBusy) return;
+    // print("IS BUSY: $_isBusy");
+    if (isLiveDetection && _isBusy) return;
     _isBusy = true;
-    setState(() {
-      _text = '';
-      // _percentText = 0;
-    });
-    final poses = await _poseDetector.processImage(inputImage);
-
-    if (widget.isExercise) {
-      _percentText = exerciseDetection(poses: poses); //BYME:
-    } else {
-      _percentText = percentOfKnockKnees(poses: poses); //BYME:
-    }
-    // print("MODEL OUTPUT: $_percentText :D:D");
-    // print(poses[0]);
-    if (inputImage.metadata?.size != null &&
-        inputImage.metadata?.rotation != null) {
+    // setState(() {
+    //   _text = '';
+    // });
+    if (isLiveDetection) {
+      final poses = await _poseDetector.processImage(inputImage);
+      // print("MODEL OUTPUT: $_percentText :D:D");
+      if (widget.isExercise) {
+        _percentText = exerciseDetection(poses: poses); //BYME:
+      } else {
+        _percentText = percentOfKnockKnees(poses: poses); //BYME:
+      }
       final painter = PosePainter(
         poses,
         inputImage.metadata!.size,
@@ -75,23 +75,25 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
         _cameraLensDirection,
       );
       _customPaint = CustomPaint(painter: painter);
-      // _percentText = await percentOfKnockKnees(poses: poses);//BYME:
-      // print("You have $_percentText% knock knees.");
     } else {
-      // poses[0].landmarks.forEach((key, value) {
-      //   print("$key: $value");
-      // });
-
-      // print(percentOfKnockKnees());
-      // print(obj);
-      // print(coordinates);
-      _text = 'Poses found: ${poses.length}\n\n';
-      // _percentText = await percentOfKnockKnees(poses: poses); //BYME:
+      double avgPercent = 0.0;
+      for (int i = 0; i < 20; ++i) {
+        final poses = await _poseDetector.processImage(inputImage);
+        String detection = percentOfKnockKnees(poses: poses);
+        if (detection != "Loading...") {
+          // print("DETECTION ${i + 1}: $detection");
+          avgPercent += double.parse(detection);
+        } else {
+          // print("DETECTION ${i + 1}: $detection");
+        }
+      }
+      _percentText = (avgPercent / 20).toStringAsFixed(2);
+      // _text = 'Poses found: ${poses.length}\n\n';
       // TODO: set _customPaint to draw landmarks on top of image
       _customPaint = null;
-      // Coordinates obj = Coordinates.fromJson(coordinatesMap);
     }
     _isBusy = false;
+    // print("IS BUSY MARKED FALSE: $_isBusy");
     if (mounted) {
       setState(() {});
     }

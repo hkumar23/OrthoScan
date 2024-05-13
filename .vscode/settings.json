@@ -1,6 +1,7 @@
 {   
     "todo-tree.highlights.useColourScheme": true,
     "todo-tree.highlights.customHighlight": {
+
         "BUG": {
             "icon": "bug"
         },
@@ -27,6 +28,11 @@
             "icon": "check",
             "background": "#fff200",
             "foreground": "#000000"
+        },
+        "NOT USED": {
+            "icon": "circle-slash",
+            "background": "#002fff",
+            "foreground": "#ffffff"
         }
     },
     "todo-tree.general.tags": [
@@ -37,6 +43,7 @@
         "XXX",
         "[ ]",
         "[x]",
-        "BYME"
+        "BYME",
+        "NOT USED"
     ]
 }

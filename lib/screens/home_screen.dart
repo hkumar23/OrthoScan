@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:orthoscan2/knock_knee_detection/vision_detector_views/pose_detector_view.dart';
+import 'package:orthoscan2/screens/exercise_screen.dart';
 import 'package:orthoscan2/screens/problem_detection_screen.dart';
 import 'package:orthoscan2/widgets/banner_item.dart';
 import 'package:orthoscan2/widgets/category_item.dart';
@@ -134,10 +135,7 @@ class HomeScreen extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PoseDetectorView(
-                                  isExercise: true,
-                                  title: "Interactive Exercises",
-                                )));
+                            builder: (context) => const ExerciseScreen()));
                       },
                       child: const CategoryItem(
                         "https://i.pinimg.com/736x/ed/4a/57/ed4a57e908434b2b53f9f2c8fcbb7ded.jpg",
