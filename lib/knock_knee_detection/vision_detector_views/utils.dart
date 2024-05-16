@@ -127,6 +127,17 @@ String percentOfKnockKnees({required List<Pose> poses}) {
   return "Loading...";
 }
 
-String exerciseDetection({required List<Pose> poses}) {
-  return "You are doing the exercise right!";
+String jumpingJacks({required List<Pose> poses}) {
+  // print("Jumping Jacks");
+  return "You are doing Jumping Jacks right!";
+}
+
+String cablePushdown({required List<Pose> poses}) {
+  // print("Cable Pushdown");
+  return "You are doing Cable Pushdown right!";
+}
+
+String barbellUnderhand({required List<Pose> poses}) {
+  // print("Barbell Underhand");
+  return "You are doing Barbell Underhand right!";
 }

@@ -105,9 +105,7 @@ class _CameraViewState extends State<CameraView> {
           if (widget.isExercise == false) _detectionViewModeToggle(),
           _zoomControl(),
           _exposureControl(),
-          widget.percentText!.contains("exercise")
-              ? _exerciseResultBox()
-              : _resultBox(),
+          widget.isExercise == true ? _exerciseResultBox() : _resultBox(),
           // _exerciseResultBox() //BYME:
         ],
       ),

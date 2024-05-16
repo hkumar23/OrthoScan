@@ -4,14 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import 'package:orthoscan2/knock_knee_detection/vision_detector_views/utils.dart';
+import 'package:orthoscan2/utils/exercise_type.dart';
 import 'detector_view.dart';
 import 'painters/pose_painter.dart';
 
 class PoseDetectorView extends StatefulWidget {
-  const PoseDetectorView(
-      {required this.title, required this.isExercise, super.key});
+  const PoseDetectorView({
+    super.key,
+    required this.title,
+    required this.isExercise,
+    required this.exerciseType,
+  });
   final bool isExercise;
   final String title;
+  final ExcerciseType exerciseType; //BYME:
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
@@ -24,7 +30,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   CustomPaint? _customPaint;
   String? _text;
   var _cameraLensDirection = CameraLensDirection.back;
-  String _percentText = "Loading..."; //BYME:
+  String _percentText = "Loading..."; //BYME
   // Random random = Random();
 
   @override
@@ -36,6 +42,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
 
   @override
   Widget build(BuildContext context) {
+    // print("thrice: ${widget.exerciseType}");
     return DetectorView(
       title: widget.title,
       customPaint: _customPaint,
@@ -64,7 +71,21 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
       final poses = await _poseDetector.processImage(inputImage);
       // print("MODEL OUTPUT: $_percentText :D:D");
       if (widget.isExercise) {
-        _percentText = exerciseDetection(poses: poses); //BYME:
+        //BYME
+        switch (widget.exerciseType) {
+          case ExcerciseType.jumpingJacks:
+            _percentText = jumpingJacks(poses: poses);
+            break;
+          case ExcerciseType.cablePushdown:
+            _percentText = cablePushdown(poses: poses);
+            break;
+          case ExcerciseType.barbellUnderhand:
+            _percentText = barbellUnderhand(poses: poses);
+            break;
+          default:
+            _percentText = "Loading...";
+        }
+        // _percentText = jumpingJacks(poses: poses); //BYME:
       } else {
         _percentText = percentOfKnockKnees(poses: poses); //BYME:
       }

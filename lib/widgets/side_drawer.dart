@@ -157,15 +157,15 @@ class SideDrawer extends StatelessWidget {
                       Navigator.of(context).pushNamed(ProfileScreen.routeName);
                     },
                   ),
-                  _listTileBuilder(
-                    context,
-                    Icons.history,
-                    "History and Progress",
-                    () {
-                      Navigator.of(context)
-                          .pushNamed(HistoryAndProgress.routeName);
-                    },
-                  ),
+                  // _listTileBuilder(
+                  //   context,
+                  //   Icons.history,
+                  //   "History and Progress",
+                  //   () {
+                  //     Navigator.of(context)
+                  //         .pushNamed(HistoryAndProgress.routeName);
+                  //   },
+                  // ),
                   _listTileBuilder(
                     context,
                     Icons.feedback,
@@ -174,21 +174,45 @@ class SideDrawer extends StatelessWidget {
                       Navigator.of(context).pushNamed(FeedbackScreen.routeName);
                     },
                   ),
-                  const SizedBox(
-                    height: 200,
-                  ),
                   Expanded(
-                    child: _listTileBuilder(
-                      context,
-                      Icons.logout,
-                      "Logout",
-                      () {
-                        // print("logout initiated");
-                        Provider.of<Auth>(context, listen: false)
-                            .logout(context);
-                        // Navigator.of(context).popUntil(ModalRoute.withName('/'));
-                        // Navigator.of(context).pushNamed('/');
-                      },
+                    // flex: 100,
+                    child: Container(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      alignment: Alignment.bottomCenter,
+                      // color: Colors.red,
+                      child: _listTileBuilder(
+                        context,
+                        Icons.logout,
+                        "Logout",
+                        () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .tertiaryContainer,
+                                title: const Text(
+                                    "Are you sure you want to logout?"),
+                                actions: [
+                                  OutlinedButton(
+                                    onPressed: () {
+                                      Provider.of<Auth>(context, listen: false)
+                                          .logout(context);
+                                    },
+                                    child: const Text("Yes"),
+                                  ),
+                                  FilledButton(
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    child: const Text("No"),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   )
                 ],

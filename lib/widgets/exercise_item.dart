@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orthoscan2/knock_knee_detection/vision_detector_views/pose_detector_view.dart';
+import 'package:orthoscan2/utils/exercise_type.dart';
 
 class ExcerciseItem extends StatelessWidget {
   const ExcerciseItem({
@@ -7,16 +8,19 @@ class ExcerciseItem extends StatelessWidget {
     required this.imageUrl,
     required this.exerciseName,
     required this.gifUrl,
+    required this.type,
   });
   final String imageUrl;
   final String exerciseName;
   final String gifUrl;
-
+  final ExcerciseType type;
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
+        // print("once: $type");
+
         showDialog(
             context: context,
             builder: (context) {
@@ -29,18 +33,27 @@ class ExcerciseItem extends StatelessWidget {
                   width: deviceSize.height * 0.25,
                 ),
                 actions: [
-                  TextButton(
+                  FilledButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     child: const Text("Close"),
                   ),
                   FilledButton(
                       onPressed: () {
+                        // print("twice: $type");
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) => PoseDetectorView(
-                                title: exerciseName, isExercise: true),
+                              title: exerciseName,
+                              isExercise: true,
+                              exerciseType: type,
+                            ),
                           ),
                         );
                       },

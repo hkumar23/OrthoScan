@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:orthoscan2/knock_knee_detection/vision_detector_views/pose_detector_view.dart';
 import 'package:orthoscan2/screens/exercise_screen.dart';
 import 'package:orthoscan2/screens/problem_detection_screen.dart';
+import 'package:orthoscan2/utils/exercise_type.dart';
 import 'package:orthoscan2/widgets/banner_item.dart';
 import 'package:orthoscan2/widgets/category_item.dart';
 import 'package:orthoscan2/widgets/side_drawer.dart';
@@ -118,11 +119,15 @@ class HomeScreen extends StatelessWidget {
                     // ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (context) => const PoseDetectorView(
-                                  isExercise: false,
-                                  title: "Knock Knee Detection",
-                                )));
+                              isExercise: false,
+                              title: "Knock Knee Detection",
+                              exerciseType: ExcerciseType.notSelected,
+                            ),
+                          ),
+                        );
                       },
                       child: const CategoryItem(
                         "https://i.pinimg.com/564x/b9/24/4d/b9244d2a676bd6841d4c8918b5148236.jpg",

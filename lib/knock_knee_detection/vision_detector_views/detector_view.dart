@@ -21,6 +21,7 @@ class DetectorView extends StatefulWidget {
     this.onCameraLensDirectionChanged,
     this.percentText,
     required this.isExercise, //BYME:
+    // required this.exerciseType, //BYME:
   });
 
   final String title;
@@ -34,6 +35,7 @@ class DetectorView extends StatefulWidget {
   final CameraLensDirection initialCameraLensDirection;
   final String? percentText; //BYME:
   final bool isExercise; //BYME:
+  // int exerciseType; //BYME:
 
   @override
   State<DetectorView> createState() => _DetectorViewState();
