@@ -128,16 +128,106 @@ String percentOfKnockKnees({required List<Pose> poses}) {
 }
 
 String jumpingJacks({required List<Pose> poses}) {
+  // Check if arms are extended outwards and upwards
+  double leftArmAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
+      poses[0].landmarks[PoseLandmarkType.leftWrist]!);
+  double rightArmAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
+      poses[0].landmarks[PoseLandmarkType.rightWrist]!);
+  bool armsExtended = (leftArmAngle > 150) && (rightArmAngle > 150);
+
+  double leftArmpitAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
+      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.leftHip]!);
+  double rightArmpitAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
+      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.rightHip]!);
+  bool armsNotDown = (leftArmpitAngle > 60) && (rightArmpitAngle > 60);
+
+  // Check if legs are spread apart
+  double legsDistance = (poses[0].landmarks[PoseLandmarkType.leftHip]!.y -
+          poses[0].landmarks[PoseLandmarkType.rightHip]!.y)
+      .abs();
+  bool legsSpread = legsDistance > 0.2; // Assuming a threshold for leg spread
+
+  return armsExtended && legsSpread && armsNotDown
+      ? "Posture: Correct"
+      : "Posture: Incorrect";
+
   // print("Jumping Jacks");
-  return "You are doing Jumping Jacks right!";
+  // return "You are doing Jumping Jacks right!";
 }
 
 String cablePushdown({required List<Pose> poses}) {
+  double leftElbowAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
+      poses[0].landmarks[PoseLandmarkType.leftWrist]!);
+  double rightElbowAngle = calculateAngle(
+      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
+      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
+      poses[0].landmarks[PoseLandmarkType.rightWrist]!);
+  bool elbowsAligned = (leftElbowAngle - rightElbowAngle).abs() <
+      10; // Assuming a threshold for alignment
+
+  // Check if wrists are higher than elbows
+  bool leftWristAboveElbow = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y <
+      poses[0].landmarks[PoseLandmarkType.leftElbow]!.y;
+  bool rightWristAboveElbow =
+      poses[0].landmarks[PoseLandmarkType.rightWrist]!.y <
+          poses[0].landmarks[PoseLandmarkType.rightElbow]!.y;
+
+  return elbowsAligned && leftWristAboveElbow && rightWristAboveElbow
+      ? "Posture: Correct"
+      : "Posture: Incorrect";
   // print("Cable Pushdown");
-  return "You are doing Cable Pushdown right!";
+  // return "You are doing Cable Pushdown right!";
 }
 
 String barbellUnderhand({required List<Pose> poses}) {
+  bool handsBelowShoulders = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y >
+          poses[0].landmarks[PoseLandmarkType.leftShoulder]!.y &&
+      poses[0].landmarks[PoseLandmarkType.rightWrist]!.y >
+          poses[0].landmarks[PoseLandmarkType.rightShoulder]!.y;
+
+  // Check if hands are at a certain distance apart
+  double handsDistance = (poses[0].landmarks[PoseLandmarkType.leftWrist]!.x -
+          poses[0].landmarks[PoseLandmarkType.rightWrist]!.x)
+      .abs();
+  bool correctHandsDistance = (0.6 < handsDistance) &&
+      (handsDistance < 0.9); // Assuming a range for hand distance
+
+  return handsBelowShoulders && correctHandsDistance
+      ? "Posture: Correct"
+      : "Posture: Incorrect";
+
   // print("Barbell Underhand");
-  return "You are doing Barbell Underhand right!";
+  // return "You are doing Barbell Underhand right!";
+}
+
+double calculateAngle(
+    PoseLandmark point1, PoseLandmark point2, PoseLandmark point3) {
+  // Finds the acute angle bw three points
+
+  // Calculate vectors
+  double ux = point1.x - point2.x;
+  double uy = point1.y - point2.y;
+  double vx = point3.x - point2.x;
+  double vy = point3.y - point2.y;
+
+  // Calculate dot product and magnitudes
+  double dotProduct = ux * vx + uy * vy;
+  double magnitudeU = sqrt(ux * ux + uy * uy);
+  double magnitudeV = sqrt(vx * vx + vy * vy);
+
+  // Calculate cosine of the angle
+  double cosineTheta = dotProduct / (magnitudeU * magnitudeV);
+
+  // Calculate and return the angle in degrees
+  return acos(cosineTheta) * (180 / pi);
 }
