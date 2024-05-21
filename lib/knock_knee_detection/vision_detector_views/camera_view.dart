@@ -163,16 +163,30 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget _exerciseResultBox() {
+    Color containerColor = Colors.white.withOpacity(0.6);
+    if (widget.percentText != "Loading...") {
+      if (widget.percentText!.contains("Incorrect")) {
+        containerColor = Colors.red.withOpacity(0.6);
+      } else if (widget.percentText!.contains("Correct")) {
+        containerColor = Colors.green.withOpacity(0.54);
+      }
+    }
     return Positioned(
       bottom: 70,
       right: 8,
       child: Container(
+        constraints: const BoxConstraints(
+          minWidth: 200,
+          maxWidth: 300,
+          minHeight: 100,
+          maxHeight: 200,
+        ),
+        width: 240,
+        height: 120,
         padding: const EdgeInsets.all(10),
         alignment: Alignment.center,
-        width: 200,
-        height: 100,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.6),
+          color: containerColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Text(

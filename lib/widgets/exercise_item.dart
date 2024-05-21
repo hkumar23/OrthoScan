@@ -69,7 +69,8 @@ class ExcerciseItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(17)),
           border: Border.all(
-            color: Theme.of(context).colorScheme.inversePrimary,
+            // color: Theme.of(context).colorScheme.primary,
+            color: const Color.fromARGB(255, 77, 237, 200),
             width: 2,
           ),
           image: DecorationImage(
