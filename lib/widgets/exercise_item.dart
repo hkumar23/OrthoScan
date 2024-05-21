@@ -28,20 +28,20 @@ class ExcerciseItem extends StatelessWidget {
                 title: Text(exerciseName),
                 content: Image.asset(
                   gifUrl,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   height: deviceSize.height * 0.25,
                   width: deviceSize.height * 0.25,
                 ),
                 actions: [
-                  FilledButton(
+                  OutlinedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.onSurface,
-                      ),
-                    ),
+                    // style: ButtonStyle(
+                    //   backgroundColor: MaterialStateProperty.all(
+                    //     Theme.of(context).colorScheme.onSurface,
+                    //   ),
+                    // ),
                     child: const Text("Close"),
                   ),
                   FilledButton(
@@ -69,7 +69,7 @@ class ExcerciseItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(17)),
           border: Border.all(
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.inversePrimary,
             width: 2,
           ),
           image: DecorationImage(
@@ -87,14 +87,19 @@ class ExcerciseItem extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black.withOpacity(0.9)],
+              colors: [
+                Colors.transparent,
+                // Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+                const Color.fromARGB(255, 50, 65, 57).withOpacity(0.85),
+              ],
             ),
           ),
           child: Text(
             exerciseName,
             style: TextStyle(
               fontSize: deviceSize.width * 0.25 * 0.3,
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Colors.white,
+              // Theme.of(context).colorScheme.onSurface,
               fontWeight: FontWeight.bold,
             ),
           ),

@@ -88,10 +88,16 @@ flutter:
     - assets/images/Jumping_jack_image.jpg
     - assets/images/Barbell_underhand_image.jpg
     - assets/images/Cable_pushdown_image.jpg
+    - assets/images/hip_Abductor_Strengthening_image.png
+    - assets/images/02_Jumping_jack_image.jpg
 
     - assets/gifs/Jumping_jacks_animation.gif
     - assets/gifs/Barbell__underhand_animation.gif
+    - assets/gifs/02_Barbell__underhand_animation.gif
     - assets/gifs/Cable_pushdown_animation.gif
+    - assets/gifs/02_Cable_pushdown_animation.gif
+    - assets/gifs/hip_Abductor_Strengthening_animation.gif
+    
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

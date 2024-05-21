@@ -3,4 +3,5 @@ enum ExcerciseType {
   jumpingJacks,
   cablePushdown,
   barbellUnderhand,
+  hipAbductorStrengthening,
 }

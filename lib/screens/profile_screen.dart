@@ -266,8 +266,8 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             trailing: const Icon(Icons.arrow_forward_rounded),
                             onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(HomeScreen.routeName);
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomeScreen.routeName, (route) => false);
                             },
                           ),
                           ListTile(

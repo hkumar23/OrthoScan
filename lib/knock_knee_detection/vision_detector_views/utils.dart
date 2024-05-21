@@ -128,86 +128,255 @@ String percentOfKnockKnees({required List<Pose> poses}) {
 }
 
 String jumpingJacks({required List<Pose> poses}) {
-  // Check if arms are extended outwards and upwards
+  if (poses.isEmpty) {
+    return "No poses detected";
+  }
+  Pose pose = poses[0];
+  //Calculate Distances
+  double shouldersDistance = (pose.landmarks[PoseLandmarkType.leftShoulder]!.x -
+          pose.landmarks[PoseLandmarkType.rightShoulder]!.x)
+      .abs();
+  double legsDistance = (pose.landmarks[PoseLandmarkType.leftAnkle]!.x -
+          pose.landmarks[PoseLandmarkType.rightAnkle]!.x)
+      .abs();
+  double hipsWidth = (pose.landmarks[PoseLandmarkType.leftHip]!.x -
+          pose.landmarks[PoseLandmarkType.rightHip]!.x)
+      .abs();
+  //Calculate Angles
   double leftArmAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
-      poses[0].landmarks[PoseLandmarkType.leftWrist]!);
+      pose.landmarks[PoseLandmarkType.leftShoulder]!,
+      pose.landmarks[PoseLandmarkType.leftElbow]!,
+      pose.landmarks[PoseLandmarkType.leftWrist]!);
   double rightArmAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
-      poses[0].landmarks[PoseLandmarkType.rightWrist]!);
-  bool armsExtended = (leftArmAngle > 150) && (rightArmAngle > 150);
-
+      pose.landmarks[PoseLandmarkType.rightShoulder]!,
+      pose.landmarks[PoseLandmarkType.rightElbow]!,
+      pose.landmarks[PoseLandmarkType.rightWrist]!);
   double leftArmpitAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
-      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.leftHip]!);
+      pose.landmarks[PoseLandmarkType.leftElbow]!,
+      pose.landmarks[PoseLandmarkType.leftShoulder]!,
+      pose.landmarks[PoseLandmarkType.leftHip]!);
   double rightArmpitAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
-      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.rightHip]!);
-  bool armsNotDown = (leftArmpitAngle > 60) && (rightArmpitAngle > 60);
+      pose.landmarks[PoseLandmarkType.rightElbow]!,
+      pose.landmarks[PoseLandmarkType.rightShoulder]!,
+      pose.landmarks[PoseLandmarkType.rightHip]!);
+
+  // Check if arms are extended outwards and upwards
+  bool armsExtended = (leftArmAngle > 120) && (rightArmAngle > 120);
+  bool armsNotDown = (leftArmpitAngle > 20) && (rightArmpitAngle > 20);
 
   // Check if legs are spread apart
-  double legsDistance = (poses[0].landmarks[PoseLandmarkType.leftHip]!.y -
-          poses[0].landmarks[PoseLandmarkType.rightHip]!.y)
-      .abs();
-  bool legsSpread = legsDistance > 0.2; // Assuming a threshold for leg spread
+  bool legsSpread = legsDistance >= 0.4 * shouldersDistance;
 
-  return armsExtended && legsSpread && armsNotDown
-      ? "Posture: Correct"
-      : "Posture: Incorrect";
+  if (!armsExtended) {
+    return "Posture: Incorrect - Arms not extended";
+  }
+  if (!armsNotDown) {
+    return "Posture: Incorrect - Arms not in correct position";
+  }
+  if (!legsSpread) {
+    return "Posture: Incorrect - Legs not spread apart";
+  }
 
-  // print("Jumping Jacks");
-  // return "You are doing Jumping Jacks right!";
+  return "Posture: Correct";
 }
 
-String cablePushdown({required List<Pose> poses}) {
-  double leftElbowAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.leftElbow]!,
-      poses[0].landmarks[PoseLandmarkType.leftWrist]!);
-  double rightElbowAngle = calculateAngle(
-      poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
-      poses[0].landmarks[PoseLandmarkType.rightElbow]!,
-      poses[0].landmarks[PoseLandmarkType.rightWrist]!);
-  bool elbowsAligned = (leftElbowAngle - rightElbowAngle).abs() <
-      10; // Assuming a threshold for alignment
+// String cablePushdown({required List<Pose> poses}) {
+//   double leftElbowAngle = calculateAngle(
+//       poses[0].landmarks[PoseLandmarkType.leftShoulder]!,
+//       poses[0].landmarks[PoseLandmarkType.leftElbow]!,
+//       poses[0].landmarks[PoseLandmarkType.leftWrist]!);
+//   double rightElbowAngle = calculateAngle(
+//       poses[0].landmarks[PoseLandmarkType.rightShoulder]!,
+//       poses[0].landmarks[PoseLandmarkType.rightElbow]!,
+//       poses[0].landmarks[PoseLandmarkType.rightWrist]!);
+//   bool elbowsAligned = (leftElbowAngle - rightElbowAngle).abs() <
+//       10; // Assuming a threshold for alignment
 
-  // Check if wrists are higher than elbows
-  bool leftWristAboveElbow = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y <
-      poses[0].landmarks[PoseLandmarkType.leftElbow]!.y;
-  bool rightWristAboveElbow =
-      poses[0].landmarks[PoseLandmarkType.rightWrist]!.y <
-          poses[0].landmarks[PoseLandmarkType.rightElbow]!.y;
+//   // Check if wrists are higher than elbows
+//   bool leftWristAboveElbow = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y <
+//       poses[0].landmarks[PoseLandmarkType.leftElbow]!.y;
+//   bool rightWristAboveElbow =
+//       poses[0].landmarks[PoseLandmarkType.rightWrist]!.y <
+//           poses[0].landmarks[PoseLandmarkType.rightElbow]!.y;
 
-  return elbowsAligned && leftWristAboveElbow && rightWristAboveElbow
-      ? "Posture: Correct"
-      : "Posture: Incorrect";
-  // print("Cable Pushdown");
-  // return "You are doing Cable Pushdown right!";
+//   return elbowsAligned && leftWristAboveElbow && rightWristAboveElbow
+//       ? "Posture: Correct"
+//       : "Posture: Incorrect";
+// }
+
+String hipAbductorStrengthening({required List<Pose> poses}) {
+  if (poses.isEmpty) {
+    return "No poses detected";
+  }
+
+  Pose pose = poses[0];
+  //Calculate Distances
+  double rightLegAbductionDistance =
+      (pose.landmarks[PoseLandmarkType.rightHip]!.y -
+              pose.landmarks[PoseLandmarkType.rightAnkle]!.x)
+          .abs();
+  double leftLegAbductionDistance =
+      (pose.landmarks[PoseLandmarkType.rightHip]!.y -
+              pose.landmarks[PoseLandmarkType.rightAnkle]!.x)
+          .abs();
+  // Calculate Angles
+  double leftKneeAngle = calculateAngle(
+    pose.landmarks[PoseLandmarkType.leftHip]!,
+    pose.landmarks[PoseLandmarkType.leftKnee]!,
+    pose.landmarks[PoseLandmarkType.leftAnkle]!,
+  );
+  double rightKneeAngle = calculateAngle(
+    pose.landmarks[PoseLandmarkType.rightHip]!,
+    pose.landmarks[PoseLandmarkType.rightKnee]!,
+    pose.landmarks[PoseLandmarkType.rightAnkle]!,
+  );
+  double upperBodyAngle = calculateAngle(
+    pose.landmarks[PoseLandmarkType.leftElbow]!,
+    pose.landmarks[PoseLandmarkType.leftShoulder]!,
+    pose.landmarks[PoseLandmarkType.leftHip]!,
+  );
+  // Check supporting leg stability
+  bool supportingLegStable = (leftKneeAngle > 160 && leftKneeAngle <= 180);
+
+  // Check active leg position (straight at start)
+  bool activeLegStraight = (rightKneeAngle > 170 && rightKneeAngle < 180);
+
+  // Check leg abduction
+  bool legAbducted =
+      rightLegAbductionDistance > 0.85 * leftLegAbductionDistance;
+
+  // Check hip height (hips remain level)
+  double leftHipY = pose.landmarks[PoseLandmarkType.leftHip]!.y;
+  double leftKneeY = pose.landmarks[PoseLandmarkType.leftKnee]!.y;
+  // double rightHipY = pose.landmarks[PoseLandmarkType.rightHip]!.y;
+  bool hipsLevel =
+      (leftHipY - leftKneeY).abs() <= 20; // Adjust threshold as needed
+
+  // Check back straight
+  // double backAngle = calculateAngle(
+  //   pose.landmarks[PoseLandmarkType.leftShoulder]!,
+  //   pose.landmarks[PoseLandmarkType.leftHip]!,
+  //   pose.landmarks[PoseLandmarkType.leftKnee]!,
+  // );
+  // bool backStraight = (backAngle - 180).abs() < 10.0;
+
+  // Check upper body stability (not swaying)
+  bool upperBodyStable = upperBodyAngle < 65;
+
+  if (!supportingLegStable) {
+    return "Posture: Incorrect - Supporting leg is not stable";
+  }
+
+  if (!activeLegStraight) {
+    return "Posture: Incorrect - Active leg is not straight";
+  }
+
+  if (!legAbducted) {
+    return "Posture: Incorrect - Leg is not abducted correctly";
+  }
+
+  if (!hipsLevel) {
+    return "Posture: Incorrect - Hips are not level";
+  }
+
+  // if (!backStraight) {
+  //   return "Posture: Incorrect - Back is not straight";
+  // }
+
+  if (!upperBodyStable) {
+    return "Posture: Incorrect - Upper body is not stable";
+  }
+
+  return "Posture: Correct";
 }
 
-String barbellUnderhand({required List<Pose> poses}) {
-  bool handsBelowShoulders = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y >
-          poses[0].landmarks[PoseLandmarkType.leftShoulder]!.y &&
-      poses[0].landmarks[PoseLandmarkType.rightWrist]!.y >
-          poses[0].landmarks[PoseLandmarkType.rightShoulder]!.y;
+// String barbellUnderhand({required List<Pose> poses}) {
+//   bool handsBelowShoulders = poses[0].landmarks[PoseLandmarkType.leftWrist]!.y >
+//           poses[0].landmarks[PoseLandmarkType.leftShoulder]!.y &&
+//       poses[0].landmarks[PoseLandmarkType.rightWrist]!.y >
+//           poses[0].landmarks[PoseLandmarkType.rightShoulder]!.y;
 
-  // Check if hands are at a certain distance apart
-  double handsDistance = (poses[0].landmarks[PoseLandmarkType.leftWrist]!.x -
-          poses[0].landmarks[PoseLandmarkType.rightWrist]!.x)
+//   // Check if hands are at a certain distance apart
+//   double handsDistance = (poses[0].landmarks[PoseLandmarkType.leftWrist]!.x -
+//           poses[0].landmarks[PoseLandmarkType.rightWrist]!.x)
+//       .abs();
+//   bool correctHandsDistance = (0.6 < handsDistance) &&
+//       (handsDistance < 0.9); // Assuming a range for hand distance
+
+//   return handsBelowShoulders && correctHandsDistance
+//       ? "Posture: Correct"
+//       : "Posture: Incorrect";
+
+//   // print("Barbell Underhand");
+//   // return "You are doing Barbell Underhand right!";
+// }
+
+String barbellUnderhand({
+  required List<Pose> poses,
+}) {
+  if (poses.isEmpty) {
+    return "No poses detected";
+  }
+
+  Pose pose = poses[0];
+
+  // Calculate distances
+  double feetsDistance = (pose.landmarks[PoseLandmarkType.leftAnkle]!.x -
+          pose.landmarks[PoseLandmarkType.rightAnkle]!.x)
       .abs();
-  bool correctHandsDistance = (0.6 < handsDistance) &&
-      (handsDistance < 0.9); // Assuming a range for hand distance
+  double shouldersDistance = (pose.landmarks[PoseLandmarkType.leftShoulder]!.x -
+          pose.landmarks[PoseLandmarkType.rightShoulder]!.x)
+      .abs();
+  double handsDistance = (pose.landmarks[PoseLandmarkType.leftWrist]!.x -
+          pose.landmarks[PoseLandmarkType.rightWrist]!.x)
+      .abs();
 
-  return handsBelowShoulders && correctHandsDistance
-      ? "Posture: Correct"
-      : "Posture: Incorrect";
+  // Calculate angles
+  double leftBackAngle = calculateAngle(
+    pose.landmarks[PoseLandmarkType.leftShoulder]!,
+    pose.landmarks[PoseLandmarkType.leftHip]!,
+    pose.landmarks[PoseLandmarkType.leftKnee]!,
+  );
 
-  // print("Barbell Underhand");
-  // return "You are doing Barbell Underhand right!";
+  double rightBackAngle = calculateAngle(
+    pose.landmarks[PoseLandmarkType.rightShoulder]!,
+    pose.landmarks[PoseLandmarkType.rightHip]!,
+    pose.landmarks[PoseLandmarkType.rightKnee]!,
+  );
+
+// Check if hands are below shoulders
+  bool handsBelowShoulders = pose.landmarks[PoseLandmarkType.leftWrist]!.y >
+          pose.landmarks[PoseLandmarkType.leftShoulder]!.y &&
+      pose.landmarks[PoseLandmarkType.rightWrist]!.y >
+          pose.landmarks[PoseLandmarkType.rightShoulder]!.y;
+
+// Compare handsDistance with shouldersDistance
+  bool correctHandsDistance = shouldersDistance <= handsDistance &&
+      shouldersDistance >= 0.6 * handsDistance;
+
+// Check back angle
+  bool backBent = leftBackAngle < 160 || rightBackAngle < 160;
+
+// Check feet placement
+  bool feetShoulderWidth =
+      (feetsDistance - shouldersDistance).abs() <= 0.2 * shouldersDistance;
+  if (!handsBelowShoulders) {
+    return "Posture: Incorrect - Hands are not below shoulders";
+  }
+
+  if (!correctHandsDistance) {
+    return "Posture: Incorrect - Hands are not at the correct distance apart";
+  }
+
+  if (!backBent) {
+    return "Posture: Incorrect - Back is not bent Correctly";
+  }
+
+  if (!feetShoulderWidth) {
+    return "Posture: Incorrect - Feet are not shoulder-width apart";
+  }
+
+  return "Posture: Correct";
 }
 
 double calculateAngle(

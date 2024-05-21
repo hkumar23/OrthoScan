@@ -56,6 +56,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
   }
 
   Future<void> _processImage(InputImage inputImage) async {
+    // final deviceSize = MediaQuery.of(context).size;
+
     // print("IMAGE METADATA: ${inputImage.metadata!}");
     // print("PROCESSING IMAGE...");
     bool isLiveDetection = inputImage.metadata?.size != null &&
@@ -76,8 +78,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView> {
           case ExcerciseType.jumpingJacks:
             _percentText = jumpingJacks(poses: poses);
             break;
-          case ExcerciseType.cablePushdown:
-            _percentText = cablePushdown(poses: poses);
+          case ExcerciseType.hipAbductorStrengthening:
+            _percentText = hipAbductorStrengthening(poses: poses);
             break;
           case ExcerciseType.barbellUnderhand:
             _percentText = barbellUnderhand(poses: poses);

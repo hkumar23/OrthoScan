@@ -19,23 +19,25 @@ class ExerciseScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ExcerciseItem(
-                  imageUrl: "assets/images/Jumping_jack_image.jpg",
+                  imageUrl: "assets/images/02_Jumping_jack_image.jpg",
                   exerciseName: "Jumping Jacks",
                   gifUrl: "assets/gifs/Jumping_jacks_animation.gif",
                   type: ExcerciseType.jumpingJacks,
                 ),
                 SizedBox(height: 20),
                 ExcerciseItem(
-                  imageUrl: "assets/images/Cable_pushdown_image.jpg",
-                  exerciseName: "Cable Pushdown",
-                  gifUrl: "assets/gifs/Cable_pushdown_animation.gif",
-                  type: ExcerciseType.cablePushdown,
+                  imageUrl:
+                      "assets/images/hip_Abductor_Strengthening_image.png",
+                  exerciseName: "Hip Abductor Strengthening",
+                  gifUrl:
+                      "assets/gifs/hip_Abductor_Strengthening_animation.gif",
+                  type: ExcerciseType.hipAbductorStrengthening,
                 ),
                 SizedBox(height: 20),
                 ExcerciseItem(
                   imageUrl: "assets/images/Barbell_underhand_image.jpg",
                   exerciseName: "Barbell Underhand",
-                  gifUrl: "assets/gifs/Barbell__underhand_animation.gif",
+                  gifUrl: "assets/gifs/02_Barbell__underhand_animation.gif",
                   type: ExcerciseType.barbellUnderhand,
                 ),
                 SizedBox(height: 20),
