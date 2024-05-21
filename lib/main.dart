@@ -15,79 +15,79 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
-  runApp(MyApp());
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  Brightness themeBrightness=Brightness.dark;
-  void toggleAppTheme(){
+  Brightness themeBrightness = Brightness.dark;
+  void toggleAppTheme() {
     setState(() {
-      if(themeBrightness==Brightness.dark){
-        themeBrightness=Brightness.light;
-      }
-      else{
-        themeBrightness=Brightness.dark;
+      if (themeBrightness == Brightness.dark) {
+        themeBrightness = Brightness.light;
+      } else {
+        themeBrightness = Brightness.dark;
       }
     });
   }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> Auth()),
+        ChangeNotifierProvider(create: (_) => Auth()),
       ],
-      child: Consumer<Auth>(
-        builder: (context,auth,ch){
-          // print("User Id: ${auth.userId}");
-          return MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              // colorScheme: ColorScheme.fromSeed(
-              //   seedColor: Colors.blue,
-              //   // brightness: Brightness.dark,
-              //   // background:Colors.blueAccent[50],
-              //   // surface: Colors.blue.shade50,
-              //   // secondary: Colors.blueGrey,
-              //   // primary: Colors.blue,
-              //   ),
-              colorSchemeSeed: Colors.teal,
-              // primarySwatch: Colors.green,
-              brightness: themeBrightness,
-              useMaterial3: true,
-            ),
-            // initialRoute: HomeScreen.routeName,
-            home: 
-            StreamBuilder(
-              stream: FirebaseAuth.instance.authStateChanges(), 
-              builder: (context,snapshot){
+      child: Consumer<Auth>(builder: (context, auth, ch) {
+        // print("User Id: ${auth.userId}");
+        return MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            // colorScheme: ColorScheme.fromSeed(
+            //   seedColor: Colors.blue,
+            //   // brightness: Brightness.dark,
+            //   // background:Colors.blueAccent[50],
+            //   // surface: Colors.blue.shade50,
+            //   // secondary: Colors.blueGrey,
+            //   // primary: Colors.blue,
+            //   ),
+            colorSchemeSeed: Colors.teal,
+            // primarySwatch: Colors.green,
+            brightness: themeBrightness,
+            useMaterial3: true,
+          ),
+          // initialRoute: HomeScreen.routeName,
+          home: StreamBuilder(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
                 // print("Snapshot: $snapshot");
-                return !snapshot.hasData 
-                       ? LoginScreen()
-                       : HomeScreen(toggleAppTheme, themeBrightness);
+                return !snapshot.hasData
+                    ? LoginScreen()
+                    : HomeScreen(toggleAppTheme, themeBrightness);
               }),
-            // HomeScreen(toggleAppTheme,themeBrightness),
-            routes: {
-              HomeScreen.routeName : (context)=> HomeScreen(toggleAppTheme,themeBrightness),
-              ProblemDetectionScreen.routeName : (context)=> ProblemDetectionScreen(),
-              ProfileScreen.routeName :(context) => ProfileScreen(toggleAppTheme,themeBrightness),
-              LoginScreen.routeName : (context) => LoginScreen(),
-              SignupScreen.routeName : (context) => SignupScreen(),
-              HistoryAndProgress.routeName : (context) => HistoryAndProgress(),
-              FeedbackScreen.routeName : (context)=> FeedbackScreen(),
-            },
-          );
-  }),
+          // HomeScreen(toggleAppTheme,themeBrightness),
+          routes: {
+            HomeScreen.routeName: (context) =>
+                HomeScreen(toggleAppTheme, themeBrightness),
+            ProblemDetectionScreen.routeName: (context) =>
+                const ProblemDetectionScreen(),
+            ProfileScreen.routeName: (context) =>
+                ProfileScreen(toggleAppTheme, themeBrightness),
+            LoginScreen.routeName: (context) => LoginScreen(),
+            SignupScreen.routeName: (context) => SignupScreen(),
+            HistoryAndProgress.routeName: (context) => HistoryAndProgress(),
+            FeedbackScreen.routeName: (context) => const FeedbackScreen(),
+          },
+        );
+      }),
     );
   }
 }
-

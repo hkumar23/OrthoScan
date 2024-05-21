@@ -51,8 +51,17 @@ class HomeScreen extends StatelessWidget {
         drawer: const SideDrawer(),
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(
-            "OrthoScan",
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/logo/logo_orthoScan.png",
+                height: 40,
+              ),
+              const Text(
+                "OrthoScan",
+              ),
+            ],
           ),
           actions: [
             IconButton(

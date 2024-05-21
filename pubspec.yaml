@@ -60,7 +60,13 @@ dependencies:
   google_mlkit_commons: ^0.6.1
   path: ^1.8.3
   path_provider: ^2.1.2
+  flutter_launcher_icons: ^0.13.1
   
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo_orthoScan.png"
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -85,6 +91,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/logo/logo_orthoScan.png
+
     - assets/images/Jumping_jack_image.jpg
     - assets/images/Barbell_underhand_image.jpg
     - assets/images/Cable_pushdown_image.jpg
