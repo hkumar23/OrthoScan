@@ -248,9 +248,11 @@ String hipAbductorStrengthening({required List<Pose> poses}) {
   // Check hip height (hips remain level)
   double leftHipY = pose.landmarks[PoseLandmarkType.leftHip]!.y;
   double leftKneeY = pose.landmarks[PoseLandmarkType.leftKnee]!.y;
+  double leftHipX = pose.landmarks[PoseLandmarkType.leftHip]!.x;
+  double leftKneeX = pose.landmarks[PoseLandmarkType.leftKnee]!.x;
   // double rightHipY = pose.landmarks[PoseLandmarkType.rightHip]!.y;
-  bool hipsLevel =
-      (leftHipY - leftKneeY).abs() <= 20; // Adjust threshold as needed
+  bool hipsLevel = (leftHipY - leftKneeY).abs() <= 25 ||
+      (leftHipX - leftKneeX).abs() <= 25; // Adjust threshold as needed
 
   // Check back straight
   // double backAngle = calculateAngle(
